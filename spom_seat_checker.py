@@ -5,6 +5,7 @@ import argparse
 import csv
 import json
 import re
+import time
 import sys
 from collections import defaultdict
 from dataclasses import dataclass
@@ -20,7 +21,8 @@ from urllib.request import HTTPCookieProcessor, Request, build_opener
 BASE_URL = "https://spmt.icai.org/ICAI"
 SLOT_PAGE_URL = f"{BASE_URL}/LoginAction_showSlotDetails.action"
 INDIA_COUNTRY_PK = "1"
-DEFAULT_TIMEOUT = 30
+DEFAULT_TIMEOUT = 90
+DEFAULT_RETRIES = 3
 DEFAULT_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -44,8 +46,9 @@ class AvailabilityRow:
 
 
 class SpomClient:
-    def __init__(self, timeout: int = DEFAULT_TIMEOUT) -> None:
+    def __init__(self, timeout: int = DEFAULT_TIMEOUT, retries: int = DEFAULT_RETRIES) -> None:
         self.timeout = timeout
+        self.retries = retries
         self.cookie_jar = CookieJar()
         self.opener = build_opener(HTTPCookieProcessor(self.cookie_jar))
         self.base_headers = {
@@ -115,9 +118,20 @@ class SpomClient:
                 }
             )
 
-        request = Request(url, headers=headers)
-        with self.opener.open(request, timeout=self.timeout) as response:
-            return response.read().decode("utf-8", errors="replace")
+        last_error: Exception | None = None
+        for attempt in range(1, self.retries + 1):
+            request = Request(url, headers=headers)
+            try:
+                with self.opener.open(request, timeout=self.timeout) as response:
+                    return response.read().decode("utf-8", errors="replace")
+            except Exception as exc:
+                last_error = exc
+                if attempt == self.retries:
+                    break
+                # Back off slightly because the ICAI endpoint can be slow on shared CI runners.
+                time.sleep(attempt * 2)
+        assert last_error is not None
+        raise last_error
 
     @staticmethod
     def _parse_delimited_options(payload: str) -> list[Option]:
