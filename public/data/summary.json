@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-22 01:23:37 India Standard Time",
+  "generatedAt": "2026-04-22 03:12:19 India Standard Time",
   "states": [
     {
       "state": "Andaman And Nicobar",
@@ -7,7 +7,7 @@
     },
     {
       "state": "Andhra Pradesh",
-      "available_count": 62
+      "available_count": 61
     },
     {
       "state": "Arunachal Pradesh",
@@ -27,7 +27,7 @@
     },
     {
       "state": "Delhi",
-      "available_count": 10
+      "available_count": 11
     },
     {
       "state": "Delhi Ncr",
@@ -71,7 +71,7 @@
     },
     {
       "state": "Maharashtra",
-      "available_count": 106
+      "available_count": 107
     },
     {
       "state": "Manipur",
@@ -80,6 +80,10 @@
     {
       "state": "Meghalaya",
       "available_count": 1
+    },
+    {
+      "state": "Mizoram",
+      "available_count": 0
     },
     {
       "state": "Nagaland",
@@ -95,7 +99,7 @@
     },
     {
       "state": "Punjab",
-      "available_count": 35
+      "available_count": 34
     },
     {
       "state": "Rajasthan",
@@ -119,7 +123,7 @@
     },
     {
       "state": "Uttar Pradesh",
-      "available_count": 87
+      "available_count": 86
     },
     {
       "state": "Uttarakhand",
@@ -139,7 +143,7 @@
     {
       "state": "Andhra Pradesh",
       "city": "Anantapur",
-      "available_count": 4
+      "available_count": 3
     },
     {
       "state": "Andhra Pradesh",
@@ -155,6 +159,11 @@
       "state": "Andhra Pradesh",
       "city": "Kadapa",
       "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Kakinada",
+      "available_count": 0
     },
     {
       "state": "Andhra Pradesh",
@@ -227,6 +236,11 @@
       "available_count": 1
     },
     {
+      "state": "Assam",
+      "city": "Tinsukia",
+      "available_count": 0
+    },
+    {
       "state": "Bihar",
       "city": "Begusarai",
       "available_count": 6
@@ -238,8 +252,18 @@
     },
     {
       "state": "Bihar",
+      "city": "Darbhanga",
+      "available_count": 0
+    },
+    {
+      "state": "Bihar",
       "city": "Gaya",
       "available_count": 6
+    },
+    {
+      "state": "Bihar",
+      "city": "Madhubani",
+      "available_count": 0
     },
     {
       "state": "Bihar",
@@ -262,9 +286,34 @@
       "available_count": 4
     },
     {
+      "state": "Bihar",
+      "city": "Samastipur",
+      "available_count": 0
+    },
+    {
+      "state": "Bihar",
+      "city": "Sitamarhi",
+      "available_count": 0
+    },
+    {
+      "state": "Bihar",
+      "city": "Siwan",
+      "available_count": 0
+    },
+    {
       "state": "Chhattisgarh",
       "city": "Bilaspur",
       "available_count": 1
+    },
+    {
+      "state": "Chhattisgarh",
+      "city": "Durg Bhilai",
+      "available_count": 0
+    },
+    {
+      "state": "Chhattisgarh",
+      "city": "Raigarh Cg",
+      "available_count": 0
     },
     {
       "state": "Chhattisgarh",
@@ -274,7 +323,7 @@
     {
       "state": "Delhi",
       "city": "Delhi New Delhi",
-      "available_count": 10
+      "available_count": 11
     },
     {
       "state": "Delhi Ncr",
@@ -303,13 +352,38 @@
     },
     {
       "state": "Gujarat",
+      "city": "Ahmedabad",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
+      "city": "Anand",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
       "city": "Ankleshwar",
       "available_count": 2
     },
     {
       "state": "Gujarat",
+      "city": "Bhavnagar",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
+      "city": "Bhuj",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
       "city": "Gandhidham",
       "available_count": 1
+    },
+    {
+      "state": "Gujarat",
+      "city": "Gandhinagar",
+      "available_count": 0
     },
     {
       "state": "Gujarat",
@@ -323,13 +397,43 @@
     },
     {
       "state": "Gujarat",
+      "city": "Mehsana",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
+      "city": "Morbi",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
+      "city": "Navsari",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
       "city": "Palanpur",
       "available_count": 4
     },
     {
       "state": "Gujarat",
+      "city": "Porbandar",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
+      "city": "Prantij",
+      "available_count": 0
+    },
+    {
+      "state": "Gujarat",
       "city": "Rajkot",
       "available_count": 11
+    },
+    {
+      "state": "Gujarat",
+      "city": "Surat",
+      "available_count": 0
     },
     {
       "state": "Gujarat",
@@ -348,6 +452,26 @@
     },
     {
       "state": "Haryana",
+      "city": "Ambala",
+      "available_count": 0
+    },
+    {
+      "state": "Haryana",
+      "city": "Bahadurgarh",
+      "available_count": 0
+    },
+    {
+      "state": "Haryana",
+      "city": "Bhiwani",
+      "available_count": 0
+    },
+    {
+      "state": "Haryana",
+      "city": "Fatehabad",
+      "available_count": 0
+    },
+    {
+      "state": "Haryana",
       "city": "Hisar",
       "available_count": 2
     },
@@ -358,8 +482,28 @@
     },
     {
       "state": "Haryana",
+      "city": "Kaithal",
+      "available_count": 0
+    },
+    {
+      "state": "Haryana",
       "city": "Karnal",
       "available_count": 6
+    },
+    {
+      "state": "Haryana",
+      "city": "Kurukshetra",
+      "available_count": 0
+    },
+    {
+      "state": "Haryana",
+      "city": "Narnaul",
+      "available_count": 0
+    },
+    {
+      "state": "Haryana",
+      "city": "Panipat",
+      "available_count": 0
     },
     {
       "state": "Haryana",
@@ -375,6 +519,11 @@
       "state": "Haryana",
       "city": "Sirsa",
       "available_count": 6
+    },
+    {
+      "state": "Haryana",
+      "city": "Sonepat",
+      "available_count": 0
     },
     {
       "state": "Haryana",
@@ -433,6 +582,16 @@
     },
     {
       "state": "Karnataka",
+      "city": "Bangalore",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
+      "city": "Belgaum",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
       "city": "Bellary",
       "available_count": 1
     },
@@ -443,8 +602,18 @@
     },
     {
       "state": "Karnataka",
+      "city": "Chitradurga",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
       "city": "Davangere",
       "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Gadag",
+      "available_count": 0
     },
     {
       "state": "Karnataka",
@@ -458,8 +627,38 @@
     },
     {
       "state": "Karnataka",
+      "city": "Haveri",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
       "city": "Hubli",
       "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Kolar",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
+      "city": "Koppal",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
+      "city": "Mandya",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
+      "city": "Mangalore",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
+      "city": "Mysore",
+      "available_count": 0
     },
     {
       "state": "Karnataka",
@@ -473,8 +672,43 @@
     },
     {
       "state": "Karnataka",
+      "city": "Sirsi",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
+      "city": "Tumakuru",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
+      "city": "Udupi",
+      "available_count": 0
+    },
+    {
+      "state": "Karnataka",
       "city": "Vijayapura",
       "available_count": 2
+    },
+    {
+      "state": "Kerala",
+      "city": "Alappuzha",
+      "available_count": 0
+    },
+    {
+      "state": "Kerala",
+      "city": "Ernakulam",
+      "available_count": 0
+    },
+    {
+      "state": "Kerala",
+      "city": "Kannur",
+      "available_count": 0
+    },
+    {
+      "state": "Kerala",
+      "city": "Kasaragod",
+      "available_count": 0
     },
     {
       "state": "Kerala",
@@ -493,6 +727,16 @@
     },
     {
       "state": "Kerala",
+      "city": "Kozhikode",
+      "available_count": 0
+    },
+    {
+      "state": "Kerala",
+      "city": "Palakkad",
+      "available_count": 0
+    },
+    {
+      "state": "Kerala",
       "city": "Pathanamthitta",
       "available_count": 2
     },
@@ -507,9 +751,24 @@
       "available_count": 12
     },
     {
+      "state": "Kerala",
+      "city": "Wayanad",
+      "available_count": 0
+    },
+    {
       "state": "Madhya Pradesh",
       "city": "Bhopal",
       "available_count": 13
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Burhanpur Shahpur",
+      "available_count": 0
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Chhindwara",
+      "available_count": 0
     },
     {
       "state": "Madhya Pradesh",
@@ -528,6 +787,11 @@
     },
     {
       "state": "Madhya Pradesh",
+      "city": "Katni",
+      "available_count": 0
+    },
+    {
+      "state": "Madhya Pradesh",
       "city": "Khandwa",
       "available_count": 4
     },
@@ -535,6 +799,16 @@
       "state": "Madhya Pradesh",
       "city": "Mandsaur",
       "available_count": 4
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Neemuch",
+      "available_count": 0
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Ratlam",
+      "available_count": 0
     },
     {
       "state": "Madhya Pradesh",
@@ -550,6 +824,11 @@
       "state": "Madhya Pradesh",
       "city": "Satna",
       "available_count": 3
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Ujjain",
+      "available_count": 0
     },
     {
       "state": "Maharashtra",
@@ -593,13 +872,33 @@
     },
     {
       "state": "Maharashtra",
+      "city": "Gondia",
+      "available_count": 0
+    },
+    {
+      "state": "Maharashtra",
       "city": "Jalgaon",
       "available_count": 3
     },
     {
       "state": "Maharashtra",
+      "city": "Jalna",
+      "available_count": 0
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Khamgaon Buldhana",
+      "available_count": 0
+    },
+    {
+      "state": "Maharashtra",
       "city": "Kolhapur",
       "available_count": 2
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Kudal",
+      "available_count": 0
     },
     {
       "state": "Maharashtra",
@@ -623,6 +922,11 @@
     },
     {
       "state": "Maharashtra",
+      "city": "Nandurbar",
+      "available_count": 0
+    },
+    {
+      "state": "Maharashtra",
       "city": "Nashik",
       "available_count": 8
     },
@@ -638,8 +942,18 @@
     },
     {
       "state": "Maharashtra",
+      "city": "Pune",
+      "available_count": 0
+    },
+    {
+      "state": "Maharashtra",
       "city": "Ratnagiri",
       "available_count": 6
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Sangli",
+      "available_count": 0
     },
     {
       "state": "Maharashtra",
@@ -653,8 +967,23 @@
     },
     {
       "state": "Maharashtra",
+      "city": "Thane",
+      "available_count": 0
+    },
+    {
+      "state": "Maharashtra",
       "city": "Virar",
-      "available_count": 10
+      "available_count": 11
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Wardha",
+      "available_count": 0
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Yavatmal",
+      "available_count": 0
     },
     {
       "state": "Manipur",
@@ -665,6 +994,11 @@
       "state": "Meghalaya",
       "city": "Shillong",
       "available_count": 1
+    },
+    {
+      "state": "Mizoram",
+      "city": "Aizawl",
+      "available_count": 0
     },
     {
       "state": "Nagaland",
@@ -685,6 +1019,21 @@
       "state": "Odisha",
       "city": "Bhubaneshwar",
       "available_count": 3
+    },
+    {
+      "state": "Odisha",
+      "city": "Cuttack",
+      "available_count": 0
+    },
+    {
+      "state": "Odisha",
+      "city": "Jharsuguda",
+      "available_count": 0
+    },
+    {
+      "state": "Odisha",
+      "city": "Rayagada",
+      "available_count": 0
     },
     {
       "state": "Odisha",
@@ -714,7 +1063,7 @@
     {
       "state": "Punjab",
       "city": "Chandigarh",
-      "available_count": 8
+      "available_count": 7
     },
     {
       "state": "Punjab",
@@ -737,6 +1086,11 @@
       "available_count": 4
     },
     {
+      "state": "Punjab",
+      "city": "Sangrur",
+      "available_count": 0
+    },
+    {
       "state": "Rajasthan",
       "city": "Ajmer",
       "available_count": 4
@@ -753,8 +1107,18 @@
     },
     {
       "state": "Rajasthan",
+      "city": "Beawar",
+      "available_count": 0
+    },
+    {
+      "state": "Rajasthan",
       "city": "Bharatpur",
       "available_count": 4
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Bhilwara",
+      "available_count": 0
     },
     {
       "state": "Rajasthan",
@@ -768,8 +1132,18 @@
     },
     {
       "state": "Rajasthan",
+      "city": "Churu",
+      "available_count": 0
+    },
+    {
+      "state": "Rajasthan",
       "city": "Jaipur",
       "available_count": 9
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Jhunjhunu",
+      "available_count": 0
     },
     {
       "state": "Rajasthan",
@@ -778,13 +1152,33 @@
     },
     {
       "state": "Rajasthan",
+      "city": "Kota",
+      "available_count": 0
+    },
+    {
+      "state": "Rajasthan",
       "city": "Nagaur",
       "available_count": 7
     },
     {
       "state": "Rajasthan",
+      "city": "Pali",
+      "available_count": 0
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Rajsamand",
+      "available_count": 0
+    },
+    {
+      "state": "Rajasthan",
       "city": "Sikar",
       "available_count": 5
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Sirohi",
+      "available_count": 0
     },
     {
       "state": "Rajasthan",
@@ -813,8 +1207,58 @@
     },
     {
       "state": "Tamil Nadu",
+      "city": "Dharmapuri",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Dindigul",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Erode",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Kancheepuram",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Karaikudi",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Karur",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
       "city": "Madurai",
       "available_count": 1
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Nagapattinam",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Nagercoil",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Namakkal",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Pudukkottai",
+      "available_count": 0
     },
     {
       "state": "Tamil Nadu",
@@ -823,8 +1267,18 @@
     },
     {
       "state": "Tamil Nadu",
+      "city": "Sivakasi",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
       "city": "Thanjavur",
       "available_count": 2
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Theni",
+      "available_count": 0
     },
     {
       "state": "Tamil Nadu",
@@ -838,13 +1292,28 @@
     },
     {
       "state": "Tamil Nadu",
+      "city": "Tirupur",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
       "city": "Tiruvannamalai",
       "available_count": 2
     },
     {
       "state": "Tamil Nadu",
+      "city": "Tuticorin",
+      "available_count": 0
+    },
+    {
+      "state": "Tamil Nadu",
       "city": "Vellore",
       "available_count": 1
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Villupuram",
+      "available_count": 0
     },
     {
       "state": "Telangana",
@@ -894,7 +1363,7 @@
     {
       "state": "Uttar Pradesh",
       "city": "Agra",
-      "available_count": 13
+      "available_count": 12
     },
     {
       "state": "Uttar Pradesh",
@@ -905,6 +1374,11 @@
       "state": "Uttar Pradesh",
       "city": "Bareilly",
       "available_count": 6
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Bulandshahr",
+      "available_count": 0
     },
     {
       "state": "Uttar Pradesh",
@@ -928,6 +1402,11 @@
     },
     {
       "state": "Uttar Pradesh",
+      "city": "Mathura",
+      "available_count": 0
+    },
+    {
+      "state": "Uttar Pradesh",
       "city": "Meerut",
       "available_count": 6
     },
@@ -938,8 +1417,18 @@
     },
     {
       "state": "Uttar Pradesh",
+      "city": "Muzaffarnagar",
+      "available_count": 0
+    },
+    {
+      "state": "Uttar Pradesh",
       "city": "Prayagraj",
       "available_count": 5
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Saharanpur",
+      "available_count": 0
     },
     {
       "state": "Uttar Pradesh",
@@ -957,6 +1446,26 @@
       "available_count": 5
     },
     {
+      "state": "Uttarakhand",
+      "city": "Haridwar",
+      "available_count": 0
+    },
+    {
+      "state": "Uttarakhand",
+      "city": "Kashipur",
+      "available_count": 0
+    },
+    {
+      "state": "West Bengal",
+      "city": "Asansol",
+      "available_count": 0
+    },
+    {
+      "state": "West Bengal",
+      "city": "Durgapur",
+      "available_count": 0
+    },
+    {
       "state": "West Bengal",
       "city": "Kharagpur",
       "available_count": 1
@@ -965,6 +1474,11 @@
       "state": "West Bengal",
       "city": "Kolkata",
       "available_count": 2
+    },
+    {
+      "state": "West Bengal",
+      "city": "Raniganj",
+      "available_count": 0
     },
     {
       "state": "West Bengal",

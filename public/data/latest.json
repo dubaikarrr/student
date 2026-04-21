@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-04-22 01:23:37 India Standard Time",
-  "total": 710,
+  "generatedAt": "2026-04-22 03:12:19 India Standard Time",
+  "total": 709,
   "rows": [
     {
       "state": "Andaman And Nicobar",
@@ -29,13 +29,6 @@
       "centre": "Dexit Global Limited - Anantapur",
       "date": "29-APR-2026",
       "capacity": 2
-    },
-    {
-      "state": "Andhra Pradesh",
-      "city": "Anantapur",
-      "centre": "Dexit Global Limited - Anantapur",
-      "date": "29-APR-2026",
-      "capacity": 3
     },
     {
       "state": "Andhra Pradesh",
@@ -749,7 +742,7 @@
       "city": "Patna",
       "centre": "Dexit Global Limited - Patna",
       "date": "27-APR-2026",
-      "capacity": 15
+      "capacity": 14
     },
     {
       "state": "Bihar",
@@ -882,6 +875,13 @@
       "city": "Delhi New Delhi",
       "centre": "Dexit Global Limited - Delhi New Delhi",
       "date": "05-MAY-2026",
+      "capacity": 25
+    },
+    {
+      "state": "Delhi",
+      "city": "Delhi New Delhi",
+      "centre": "Dexit Global Limited - Delhi New Delhi",
+      "date": "05-MAY-2026",
       "capacity": 26
     },
     {
@@ -917,7 +917,7 @@
       "city": "Delhi New Delhi",
       "centre": "Dexit Global Limited - Delhi New Delhi",
       "date": "09-MAY-2026",
-      "capacity": 14
+      "capacity": 13
     },
     {
       "state": "Delhi",
@@ -931,14 +931,14 @@
       "city": "Delhi New Delhi",
       "centre": "Dexit Global Limited - Delhi New Delhi",
       "date": "10-MAY-2026",
-      "capacity": 12
+      "capacity": 11
     },
     {
       "state": "Delhi Ncr",
       "city": "Faridabad",
       "centre": "Dexit Global Limited - Faridabad",
       "date": "04-MAY-2026",
-      "capacity": 4
+      "capacity": 3
     },
     {
       "state": "Delhi Ncr",
@@ -1008,7 +1008,7 @@
       "city": "Ghaziabad",
       "centre": "Dexit Global Limited - Ghaziabad",
       "date": "05-MAY-2026",
-      "capacity": 6
+      "capacity": 5
     },
     {
       "state": "Delhi Ncr",
@@ -1036,7 +1036,7 @@
       "city": "Ghaziabad",
       "centre": "Dexit Global Limited - Ghaziabad",
       "date": "10-MAY-2026",
-      "capacity": 4
+      "capacity": 3
     },
     {
       "state": "Delhi Ncr",
@@ -1092,7 +1092,7 @@
       "city": "Noida",
       "centre": "Dexit Global Limited - Noida",
       "date": "04-MAY-2026",
-      "capacity": 25
+      "capacity": 23
     },
     {
       "state": "Delhi Ncr",
@@ -1953,7 +1953,7 @@
       "city": "Thiruvananthapuram",
       "centre": "Dexit Global Limited - Thiruvananthapuram",
       "date": "10-MAY-2026",
-      "capacity": 12
+      "capacity": 11
     },
     {
       "state": "Kerala",
@@ -2170,7 +2170,7 @@
       "city": "Indore",
       "centre": "Dexit Global Limited - Indore",
       "date": "05-MAY-2026",
-      "capacity": 8
+      "capacity": 7
     },
     {
       "state": "Madhya Pradesh",
@@ -2744,7 +2744,7 @@
       "city": "Mumbai",
       "centre": "Dexit Global Limited - Mumbai",
       "date": "05-MAY-2026",
-      "capacity": 17
+      "capacity": 16
     },
     {
       "state": "Maharashtra",
@@ -2898,7 +2898,7 @@
       "city": "Nashik",
       "centre": "Dexit Global Limited - Nashik",
       "date": "09-MAY-2026",
-      "capacity": 6
+      "capacity": 4
     },
     {
       "state": "Maharashtra",
@@ -2947,7 +2947,7 @@
       "city": "Pimpri Chinchwad",
       "centre": "Dexit Global Limited - Pimpri Chinchwad",
       "date": "06-MAY-2026",
-      "capacity": 7
+      "capacity": 6
     },
     {
       "state": "Maharashtra",
@@ -3081,6 +3081,13 @@
       "centre": "Dexit Global Limited - Virar",
       "date": "04-MAY-2026",
       "capacity": 23
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Virar",
+      "centre": "Dexit Global Limited - Virar",
+      "date": "05-MAY-2026",
+      "capacity": 18
     },
     {
       "state": "Maharashtra",
@@ -3322,13 +3329,6 @@
     },
     {
       "state": "Punjab",
-      "city": "Chandigarh",
-      "centre": "Dexit Global Limited - Chandigarh",
-      "date": "29-APR-2026",
-      "capacity": 1
-    },
-    {
-      "state": "Punjab",
       "city": "Jalandhar",
       "centre": "Dexit Global Limited - Jalandhar",
       "date": "03-MAY-2026",
@@ -3703,7 +3703,7 @@
       "city": "Jaipur",
       "centre": "Dexit Global Limited - Jaipur",
       "date": "09-MAY-2026",
-      "capacity": 24
+      "capacity": 23
     },
     {
       "state": "Rajasthan",
@@ -4214,7 +4214,7 @@
       "city": "Hyderabad",
       "centre": "NODE COP SOLUTIONS",
       "date": "30-APR-2026",
-      "capacity": 44
+      "capacity": 45
     },
     {
       "state": "Telangana",
@@ -4355,13 +4355,6 @@
       "centre": "Dexit Global Limited - Agra",
       "date": "28-APR-2026",
       "capacity": 9
-    },
-    {
-      "state": "Uttar Pradesh",
-      "city": "Agra",
-      "centre": "Dexit Global Limited - Agra",
-      "date": "29-APR-2026",
-      "capacity": 1
     },
     {
       "state": "Uttar Pradesh",
@@ -4620,7 +4613,7 @@
       "city": "Kanpur",
       "centre": "Dexit Global Limited - Kanpur",
       "date": "29-APR-2026",
-      "capacity": 12
+      "capacity": 11
     },
     {
       "state": "Uttar Pradesh",

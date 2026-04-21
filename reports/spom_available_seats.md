@@ -1,7 +1,7 @@
 # SPOM Seat Availability Report
 
-Generated at: 2026-04-22 01:23:37 India Standard Time
-Available entries found: 710
+Generated at: 2026-04-22 03:12:19 India Standard Time
+Available entries found: 709
 
 ## Andaman And Nicobar
 
@@ -20,7 +20,6 @@ Available entries found: 710
 | Dexit Global Limited - Anantapur | 06-MAY-2026 | 5 |
 | Dexit Global Limited - Anantapur | 10-MAY-2026 | 4 |
 | Dexit Global Limited - Anantapur | 29-APR-2026 | 2 |
-| Dexit Global Limited - Anantapur | 29-APR-2026 | 3 |
 
 ### Eluru
 
@@ -243,7 +242,7 @@ Available entries found: 710
 | Dexit Global Limited - Patna | 07-MAY-2026 | 15 |
 | Dexit Global Limited - Patna | 09-MAY-2026 | 17 |
 | Dexit Global Limited - Patna | 10-MAY-2026 | 37 |
-| Dexit Global Limited - Patna | 27-APR-2026 | 15 |
+| Dexit Global Limited - Patna | 27-APR-2026 | 14 |
 | Dexit Global Limited - Patna | 27-APR-2026 | 19 |
 | Dexit Global Limited - Patna | 27-APR-2026 | 20 |
 | Dexit Global Limited - Patna | 29-APR-2026 | 11 |
@@ -286,14 +285,15 @@ Available entries found: 710
 | --- | --- | ---: |
 | Dexit Global Limited - Delhi New Delhi | 04-MAY-2026 | 1 |
 | Dexit Global Limited - Delhi New Delhi | 04-MAY-2026 | 14 |
+| Dexit Global Limited - Delhi New Delhi | 05-MAY-2026 | 25 |
 | Dexit Global Limited - Delhi New Delhi | 05-MAY-2026 | 26 |
 | Dexit Global Limited - Delhi New Delhi | 06-MAY-2026 | 37 |
 | Dexit Global Limited - Delhi New Delhi | 06-MAY-2026 | 39 |
 | Dexit Global Limited - Delhi New Delhi | 07-MAY-2026 | 28 |
 | Dexit Global Limited - Delhi New Delhi | 07-MAY-2026 | 29 |
-| Dexit Global Limited - Delhi New Delhi | 09-MAY-2026 | 14 |
+| Dexit Global Limited - Delhi New Delhi | 09-MAY-2026 | 13 |
 | Dexit Global Limited - Delhi New Delhi | 09-MAY-2026 | 20 |
-| Dexit Global Limited - Delhi New Delhi | 10-MAY-2026 | 12 |
+| Dexit Global Limited - Delhi New Delhi | 10-MAY-2026 | 11 |
 
 ## Delhi Ncr
 
@@ -301,7 +301,7 @@ Available entries found: 710
 
 | Centre | Date | Capacity |
 | --- | --- | ---: |
-| Dexit Global Limited - Faridabad | 04-MAY-2026 | 4 |
+| Dexit Global Limited - Faridabad | 04-MAY-2026 | 3 |
 | Dexit Global Limited - Faridabad | 04-MAY-2026 | 5 |
 | Dexit Global Limited - Faridabad | 05-MAY-2026 | 2 |
 | Dexit Global Limited - Faridabad | 05-MAY-2026 | 5 |
@@ -316,11 +316,11 @@ Available entries found: 710
 
 | Centre | Date | Capacity |
 | --- | --- | ---: |
-| Dexit Global Limited - Ghaziabad | 05-MAY-2026 | 6 |
+| Dexit Global Limited - Ghaziabad | 05-MAY-2026 | 5 |
 | Dexit Global Limited - Ghaziabad | 06-MAY-2026 | 6 |
 | Dexit Global Limited - Ghaziabad | 07-MAY-2026 | 6 |
 | Dexit Global Limited - Ghaziabad | 09-MAY-2026 | 3 |
-| Dexit Global Limited - Ghaziabad | 10-MAY-2026 | 4 |
+| Dexit Global Limited - Ghaziabad | 10-MAY-2026 | 3 |
 
 ### Gurugram
 
@@ -338,7 +338,7 @@ Available entries found: 710
 | --- | --- | ---: |
 | Dexit Global Limited - Noida | 02-MAY-2026 | 19 |
 | Dexit Global Limited - Noida | 02-MAY-2026 | 21 |
-| Dexit Global Limited - Noida | 04-MAY-2026 | 25 |
+| Dexit Global Limited - Noida | 04-MAY-2026 | 23 |
 | Dexit Global Limited - Noida | 04-MAY-2026 | 28 |
 | Dexit Global Limited - Noida | 05-MAY-2026 | 29 |
 | Dexit Global Limited - Noida | 05-MAY-2026 | 30 |
@@ -682,7 +682,7 @@ Available entries found: 710
 | Centre | Date | Capacity |
 | --- | --- | ---: |
 | Dexit Global Limited - Thiruvananthapuram | 03-MAY-2026 | 7 |
-| Dexit Global Limited - Thiruvananthapuram | 10-MAY-2026 | 12 |
+| Dexit Global Limited - Thiruvananthapuram | 10-MAY-2026 | 11 |
 
 ### Thrissur
 
@@ -735,7 +735,7 @@ Available entries found: 710
 | Centre | Date | Capacity |
 | --- | --- | ---: |
 | Dexit Global Limited - Indore | 05-MAY-2026 | 4 |
-| Dexit Global Limited - Indore | 05-MAY-2026 | 8 |
+| Dexit Global Limited - Indore | 05-MAY-2026 | 7 |
 | Dexit Global Limited - Indore | 06-MAY-2026 | 22 |
 | Dexit Global Limited - Indore | 06-MAY-2026 | 24 |
 | Dexit Global Limited - Indore | 07-MAY-2026 | 10 |
@@ -909,7 +909,7 @@ Available entries found: 710
 | Dexit Global Limited - Mumbai | 04-MAY-2026 | 12 |
 | Dexit Global Limited - Mumbai | 04-MAY-2026 | 31 |
 | Dexit Global Limited - Mumbai | 05-MAY-2026 | 15 |
-| Dexit Global Limited - Mumbai | 05-MAY-2026 | 17 |
+| Dexit Global Limited - Mumbai | 05-MAY-2026 | 16 |
 | Dexit Global Limited - Mumbai | 06-MAY-2026 | 51 |
 | Dexit Global Limited - Mumbai | 06-MAY-2026 | 53 |
 | Dexit Global Limited - Mumbai | 07-MAY-2026 | 18 |
@@ -946,7 +946,7 @@ Available entries found: 710
 | Dexit Global Limited - Nashik | 05-MAY-2026 | 5 |
 | Dexit Global Limited - Nashik | 06-MAY-2026 | 12 |
 | Dexit Global Limited - Nashik | 07-MAY-2026 | 12 |
-| Dexit Global Limited - Nashik | 09-MAY-2026 | 6 |
+| Dexit Global Limited - Nashik | 09-MAY-2026 | 4 |
 | Dexit Global Limited - Nashik | 09-MAY-2026 | 9 |
 
 ### Parbhani
@@ -963,7 +963,7 @@ Available entries found: 710
 
 | Centre | Date | Capacity |
 | --- | --- | ---: |
-| Dexit Global Limited - Pimpri Chinchwad | 06-MAY-2026 | 7 |
+| Dexit Global Limited - Pimpri Chinchwad | 06-MAY-2026 | 6 |
 
 ### Ratnagiri
 
@@ -1003,6 +1003,7 @@ Available entries found: 710
 | Dexit Global Limited - Virar | 02-MAY-2026 | 22 |
 | Dexit Global Limited - Virar | 04-MAY-2026 | 22 |
 | Dexit Global Limited - Virar | 04-MAY-2026 | 23 |
+| Dexit Global Limited - Virar | 05-MAY-2026 | 18 |
 | Dexit Global Limited - Virar | 05-MAY-2026 | 19 |
 | Dexit Global Limited - Virar | 06-MAY-2026 | 24 |
 | Dexit Global Limited - Virar | 07-MAY-2026 | 24 |
@@ -1109,7 +1110,6 @@ Available entries found: 710
 | Dexit Global Limited - Chandigarh | 09-MAY-2026 | 12 |
 | Dexit Global Limited - Chandigarh | 10-MAY-2026 | 15 |
 | Dexit Global Limited - Chandigarh | 27-APR-2026 | 10 |
-| Dexit Global Limited - Chandigarh | 29-APR-2026 | 1 |
 
 ### Jalandhar
 
@@ -1220,7 +1220,7 @@ Available entries found: 710
 | Dexit Global Limited - Jaipur | 06-MAY-2026 | 22 |
 | Dexit Global Limited - Jaipur | 07-MAY-2026 | 14 |
 | Dexit Global Limited - Jaipur | 09-MAY-2026 | 22 |
-| Dexit Global Limited - Jaipur | 09-MAY-2026 | 24 |
+| Dexit Global Limited - Jaipur | 09-MAY-2026 | 23 |
 | Dexit Global Limited - Jaipur | 10-MAY-2026 | 19 |
 | Dexit Global Limited - Jaipur | 10-MAY-2026 | 24 |
 
@@ -1384,7 +1384,7 @@ Available entries found: 710
 | Centre | Date | Capacity |
 | --- | --- | ---: |
 | Dexit Global Limited - Hyderabad | 04-MAY-2026 | 1 |
-| NODE COP SOLUTIONS | 30-APR-2026 | 44 |
+| NODE COP SOLUTIONS | 30-APR-2026 | 45 |
 
 ### Karimnagar
 
@@ -1449,7 +1449,6 @@ Available entries found: 710
 | Dexit Global Limited - Agra | 28-APR-2026 | 14 |
 | Dexit Global Limited - Agra | 28-APR-2026 | 2 |
 | Dexit Global Limited - Agra | 28-APR-2026 | 9 |
-| Dexit Global Limited - Agra | 29-APR-2026 | 1 |
 | Dexit Global Limited - Agra | 29-APR-2026 | 11 |
 
 ### Aligarh
@@ -1511,7 +1510,7 @@ Available entries found: 710
 | Dexit Global Limited - Kanpur | 27-APR-2026 | 2 |
 | Dexit Global Limited - Kanpur | 28-APR-2026 | 3 |
 | Dexit Global Limited - Kanpur | 29-APR-2026 | 1 |
-| Dexit Global Limited - Kanpur | 29-APR-2026 | 12 |
+| Dexit Global Limited - Kanpur | 29-APR-2026 | 11 |
 
 ### Lucknow
 

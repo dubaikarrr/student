@@ -45,6 +45,12 @@ class AvailabilityRow:
     capacity: int
 
 
+@dataclass
+class ScanCatalog:
+    states: list[str]
+    cities_by_state: dict[str, list[str]]
+
+
 class SpomClient:
     def __init__(self, timeout: int = DEFAULT_TIMEOUT, retries: int = DEFAULT_RETRIES) -> None:
         self.timeout = timeout
@@ -174,15 +180,21 @@ class SpomClient:
         return options
 
 
-def build_rows(client: SpomClient, state_filter: str | None = None) -> list[AvailabilityRow]:
+def build_rows(
+    client: SpomClient, state_filter: str | None = None
+) -> tuple[list[AvailabilityRow], ScanCatalog]:
     rows: list[AvailabilityRow] = []
+    catalog_states: list[str] = []
+    catalog_cities: dict[str, list[str]] = {}
     states = client.fetch_states()
     if state_filter:
         state_filter_norm = state_filter.casefold()
         states = [state for state in states if state.label.casefold() == state_filter_norm]
 
     for state in states:
+        catalog_states.append(state.label)
         cities = client.fetch_cities(state.key)
+        catalog_cities[state.label] = [city.label for city in cities]
         for city in cities:
             centres = client.fetch_centres(city.key)
             for centre in centres:
@@ -197,7 +209,7 @@ def build_rows(client: SpomClient, state_filter: str | None = None) -> list[Avai
                             capacity=capacity,
                         )
                     )
-    return rows
+    return rows, ScanCatalog(states=catalog_states, cities_by_state=catalog_cities)
 
 
 def write_csv(rows: Iterable[AvailabilityRow], output_path: Path) -> None:
@@ -254,7 +266,9 @@ def write_markdown(rows: list[AvailabilityRow], output_path: Path, generated_at:
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def write_public_data(rows: list[AvailabilityRow], output_dir: Path, generated_at: str) -> None:
+def write_public_data(
+    rows: list[AvailabilityRow], catalog: ScanCatalog, output_dir: Path, generated_at: str
+) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     latest_payload = {
@@ -281,12 +295,17 @@ def write_public_data(rows: list[AvailabilityRow], output_dir: Path, generated_a
     summary_payload = {
         "generatedAt": generated_at,
         "states": [
-            {"state": state, "available_count": count}
-            for state, count in sorted(state_counts.items())
+            {"state": state, "available_count": state_counts.get(state, 0)}
+            for state in sorted(catalog.states)
         ],
         "cities": [
-            {"state": state, "city": city, "available_count": count}
-            for (state, city), count in sorted(city_counts.items())
+            {
+                "state": state,
+                "city": city,
+                "available_count": city_counts.get((state, city), 0),
+            }
+            for state in sorted(catalog.cities_by_state)
+            for city in sorted(catalog.cities_by_state[state])
         ],
     }
 
@@ -347,7 +366,7 @@ def main() -> int:
 
     client = SpomClient()
     try:
-        rows = build_rows(client=client, state_filter=args.state)
+        rows, catalog = build_rows(client=client, state_filter=args.state)
     except Exception as exc:
         print(f"Scan failed: {exc}", file=sys.stderr)
         return 1
@@ -360,7 +379,7 @@ def main() -> int:
     write_csv(rows, csv_path)
     write_json(rows, json_path)
     write_markdown(rows, md_path, generated_at)
-    write_public_data(rows, public_data_dir, generated_at)
+    write_public_data(rows, catalog, public_data_dir, generated_at)
 
     latest_path = output_dir / "spom_latest_run.txt"
     latest_path.write_text(generated_at + "\n", encoding="utf-8")

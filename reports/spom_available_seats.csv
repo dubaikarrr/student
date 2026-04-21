@@ -3,7 +3,6 @@ Andaman And Nicobar,Port Blair,Dexit Global Limited - Port Blair,10-MAY-2026,5
 Andhra Pradesh,Anantapur,Dexit Global Limited - Anantapur,06-MAY-2026,5
 Andhra Pradesh,Anantapur,Dexit Global Limited - Anantapur,10-MAY-2026,4
 Andhra Pradesh,Anantapur,Dexit Global Limited - Anantapur,29-APR-2026,2
-Andhra Pradesh,Anantapur,Dexit Global Limited - Anantapur,29-APR-2026,3
 Andhra Pradesh,Eluru,Dexit Global Limited - Eluru,03-MAY-2026,5
 Andhra Pradesh,Eluru,Dexit Global Limited - Eluru,10-MAY-2026,5
 Andhra Pradesh,Guntur,Dexit Global Limited - Guntur,02-MAY-2026,7
@@ -105,7 +104,7 @@ Bihar,Patna,Dexit Global Limited - Patna,06-MAY-2026,17
 Bihar,Patna,Dexit Global Limited - Patna,07-MAY-2026,15
 Bihar,Patna,Dexit Global Limited - Patna,09-MAY-2026,17
 Bihar,Patna,Dexit Global Limited - Patna,10-MAY-2026,37
-Bihar,Patna,Dexit Global Limited - Patna,27-APR-2026,15
+Bihar,Patna,Dexit Global Limited - Patna,27-APR-2026,14
 Bihar,Patna,Dexit Global Limited - Patna,27-APR-2026,19
 Bihar,Patna,Dexit Global Limited - Patna,27-APR-2026,20
 Bihar,Patna,Dexit Global Limited - Patna,29-APR-2026,11
@@ -124,15 +123,16 @@ Chhattisgarh,Raipur,Dexit Global Limited - Raipur,07-MAY-2026,9
 Chhattisgarh,Raipur,Dexit Global Limited - Raipur,09-MAY-2026,9
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,04-MAY-2026,1
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,04-MAY-2026,14
+Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,05-MAY-2026,25
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,05-MAY-2026,26
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,06-MAY-2026,37
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,06-MAY-2026,39
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,07-MAY-2026,28
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,07-MAY-2026,29
-Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,09-MAY-2026,14
+Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,09-MAY-2026,13
 Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,09-MAY-2026,20
-Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,10-MAY-2026,12
-Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,04-MAY-2026,4
+Delhi,Delhi New Delhi,Dexit Global Limited - Delhi New Delhi,10-MAY-2026,11
+Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,04-MAY-2026,3
 Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,04-MAY-2026,5
 Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,05-MAY-2026,2
 Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,05-MAY-2026,5
@@ -142,11 +142,11 @@ Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,09-MAY-2026,2
 Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,09-MAY-2026,3
 Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,10-MAY-2026,3
 Delhi Ncr,Faridabad,Dexit Global Limited - Faridabad,10-MAY-2026,4
-Delhi Ncr,Ghaziabad,Dexit Global Limited - Ghaziabad,05-MAY-2026,6
+Delhi Ncr,Ghaziabad,Dexit Global Limited - Ghaziabad,05-MAY-2026,5
 Delhi Ncr,Ghaziabad,Dexit Global Limited - Ghaziabad,06-MAY-2026,6
 Delhi Ncr,Ghaziabad,Dexit Global Limited - Ghaziabad,07-MAY-2026,6
 Delhi Ncr,Ghaziabad,Dexit Global Limited - Ghaziabad,09-MAY-2026,3
-Delhi Ncr,Ghaziabad,Dexit Global Limited - Ghaziabad,10-MAY-2026,4
+Delhi Ncr,Ghaziabad,Dexit Global Limited - Ghaziabad,10-MAY-2026,3
 Delhi Ncr,Gurugram,Dexit Global Limited - Gurugram,05-MAY-2026,7
 Delhi Ncr,Gurugram,Dexit Global Limited - Gurugram,06-MAY-2026,3
 Delhi Ncr,Gurugram,Dexit Global Limited - Gurugram,06-MAY-2026,7
@@ -154,7 +154,7 @@ Delhi Ncr,Gurugram,Dexit Global Limited - Gurugram,07-MAY-2026,5
 Delhi Ncr,Gurugram,Dexit Global Limited - Gurugram,07-MAY-2026,7
 Delhi Ncr,Noida,Dexit Global Limited - Noida,02-MAY-2026,19
 Delhi Ncr,Noida,Dexit Global Limited - Noida,02-MAY-2026,21
-Delhi Ncr,Noida,Dexit Global Limited - Noida,04-MAY-2026,25
+Delhi Ncr,Noida,Dexit Global Limited - Noida,04-MAY-2026,23
 Delhi Ncr,Noida,Dexit Global Limited - Noida,04-MAY-2026,28
 Delhi Ncr,Noida,Dexit Global Limited - Noida,05-MAY-2026,29
 Delhi Ncr,Noida,Dexit Global Limited - Noida,05-MAY-2026,30
@@ -277,7 +277,7 @@ Kerala,Kottayam,Dexit Global Limited - Kottayam,10-MAY-2026,5
 Kerala,Pathanamthitta,Dexit Global Limited - Pathanamthitta,03-MAY-2026,1
 Kerala,Pathanamthitta,Dexit Global Limited - Pathanamthitta,10-MAY-2026,3
 Kerala,Thiruvananthapuram,Dexit Global Limited - Thiruvananthapuram,03-MAY-2026,7
-Kerala,Thiruvananthapuram,Dexit Global Limited - Thiruvananthapuram,10-MAY-2026,12
+Kerala,Thiruvananthapuram,Dexit Global Limited - Thiruvananthapuram,10-MAY-2026,11
 Kerala,Thrissur,Dexit Global Limited - Thrissur,03-MAY-2026,13
 Kerala,Thrissur,Dexit Global Limited - Thrissur,03-MAY-2026,5
 Kerala,Thrissur,Dexit Global Limited - Thrissur,04-MAY-2026,5
@@ -308,7 +308,7 @@ Madhya Pradesh,Gwalior,Dexit Global Limited - Gwalior,10-MAY-2026,11
 Madhya Pradesh,Gwalior,Dexit Global Limited - Gwalior,30-APR-2026,10
 Madhya Pradesh,Gwalior,Dexit Global Limited - Gwalior,30-APR-2026,3
 Madhya Pradesh,Indore,Dexit Global Limited - Indore,05-MAY-2026,4
-Madhya Pradesh,Indore,Dexit Global Limited - Indore,05-MAY-2026,8
+Madhya Pradesh,Indore,Dexit Global Limited - Indore,05-MAY-2026,7
 Madhya Pradesh,Indore,Dexit Global Limited - Indore,06-MAY-2026,22
 Madhya Pradesh,Indore,Dexit Global Limited - Indore,06-MAY-2026,24
 Madhya Pradesh,Indore,Dexit Global Limited - Indore,07-MAY-2026,10
@@ -390,7 +390,7 @@ Maharashtra,Latur,Dexit Global Limited - Latur,29-APR-2026,5
 Maharashtra,Mumbai,Dexit Global Limited - Mumbai,04-MAY-2026,12
 Maharashtra,Mumbai,Dexit Global Limited - Mumbai,04-MAY-2026,31
 Maharashtra,Mumbai,Dexit Global Limited - Mumbai,05-MAY-2026,15
-Maharashtra,Mumbai,Dexit Global Limited - Mumbai,05-MAY-2026,17
+Maharashtra,Mumbai,Dexit Global Limited - Mumbai,05-MAY-2026,16
 Maharashtra,Mumbai,Dexit Global Limited - Mumbai,06-MAY-2026,51
 Maharashtra,Mumbai,Dexit Global Limited - Mumbai,06-MAY-2026,53
 Maharashtra,Mumbai,Dexit Global Limited - Mumbai,07-MAY-2026,18
@@ -412,14 +412,14 @@ Maharashtra,Nashik,Dexit Global Limited - Nashik,05-MAY-2026,3
 Maharashtra,Nashik,Dexit Global Limited - Nashik,05-MAY-2026,5
 Maharashtra,Nashik,Dexit Global Limited - Nashik,06-MAY-2026,12
 Maharashtra,Nashik,Dexit Global Limited - Nashik,07-MAY-2026,12
-Maharashtra,Nashik,Dexit Global Limited - Nashik,09-MAY-2026,6
+Maharashtra,Nashik,Dexit Global Limited - Nashik,09-MAY-2026,4
 Maharashtra,Nashik,Dexit Global Limited - Nashik,09-MAY-2026,9
 Maharashtra,Parbhani,Dexit Global Limited - Parbhani,03-MAY-2026,4
 Maharashtra,Parbhani,Dexit Global Limited - Parbhani,10-MAY-2026,4
 Maharashtra,Parbhani,Dexit Global Limited - Parbhani,28-APR-2026,2
 Maharashtra,Parbhani,Dexit Global Limited - Parbhani,28-APR-2026,4
 Maharashtra,Parbhani,Dexit Global Limited - Parbhani,29-APR-2026,4
-Maharashtra,Pimpri Chinchwad,Dexit Global Limited - Pimpri Chinchwad,06-MAY-2026,7
+Maharashtra,Pimpri Chinchwad,Dexit Global Limited - Pimpri Chinchwad,06-MAY-2026,6
 Maharashtra,Ratnagiri,Dexit Global Limited - Ratnagiri,03-MAY-2026,5
 Maharashtra,Ratnagiri,Dexit Global Limited - Ratnagiri,10-MAY-2026,2
 Maharashtra,Ratnagiri,Dexit Global Limited - Ratnagiri,27-APR-2026,3
@@ -439,6 +439,7 @@ Maharashtra,Virar,Dexit Global Limited - Virar,02-MAY-2026,20
 Maharashtra,Virar,Dexit Global Limited - Virar,02-MAY-2026,22
 Maharashtra,Virar,Dexit Global Limited - Virar,04-MAY-2026,22
 Maharashtra,Virar,Dexit Global Limited - Virar,04-MAY-2026,23
+Maharashtra,Virar,Dexit Global Limited - Virar,05-MAY-2026,18
 Maharashtra,Virar,Dexit Global Limited - Virar,05-MAY-2026,19
 Maharashtra,Virar,Dexit Global Limited - Virar,06-MAY-2026,24
 Maharashtra,Virar,Dexit Global Limited - Virar,07-MAY-2026,24
@@ -473,7 +474,6 @@ Punjab,Chandigarh,Dexit Global Limited - Chandigarh,07-MAY-2026,10
 Punjab,Chandigarh,Dexit Global Limited - Chandigarh,09-MAY-2026,12
 Punjab,Chandigarh,Dexit Global Limited - Chandigarh,10-MAY-2026,15
 Punjab,Chandigarh,Dexit Global Limited - Chandigarh,27-APR-2026,10
-Punjab,Chandigarh,Dexit Global Limited - Chandigarh,29-APR-2026,1
 Punjab,Jalandhar,Dexit Global Limited - Jalandhar,03-MAY-2026,11
 Punjab,Jalandhar,Dexit Global Limited - Jalandhar,10-MAY-2026,12
 Punjab,Jalandhar,Dexit Global Limited - Jalandhar,27-APR-2026,6
@@ -527,7 +527,7 @@ Rajasthan,Jaipur,Dexit Global Limited - Jaipur,05-MAY-2026,14
 Rajasthan,Jaipur,Dexit Global Limited - Jaipur,06-MAY-2026,22
 Rajasthan,Jaipur,Dexit Global Limited - Jaipur,07-MAY-2026,14
 Rajasthan,Jaipur,Dexit Global Limited - Jaipur,09-MAY-2026,22
-Rajasthan,Jaipur,Dexit Global Limited - Jaipur,09-MAY-2026,24
+Rajasthan,Jaipur,Dexit Global Limited - Jaipur,09-MAY-2026,23
 Rajasthan,Jaipur,Dexit Global Limited - Jaipur,10-MAY-2026,19
 Rajasthan,Jaipur,Dexit Global Limited - Jaipur,10-MAY-2026,24
 Rajasthan,Jodhpur,Dexit Global Limited - Jodhpur,03-MAY-2026,13
@@ -600,7 +600,7 @@ Tamil Nadu,Vellore,Dexit Global Limited - Vellore,10-MAY-2026,8
 Telangana,Adilabad,Dexit Global Limited - Adilabad,06-MAY-2026,5
 Telangana,Adilabad,Dexit Global Limited - Adilabad,07-MAY-2026,5
 Telangana,Hyderabad,Dexit Global Limited - Hyderabad,04-MAY-2026,1
-Telangana,Hyderabad,NODE COP SOLUTIONS,30-APR-2026,44
+Telangana,Hyderabad,NODE COP SOLUTIONS,30-APR-2026,45
 Telangana,Karimnagar,Dexit Global Limited - Karimnagar,10-MAY-2026,12
 Telangana,Karimnagar,Dexit Global Limited - Karimnagar,29-APR-2026,2
 Telangana,Khammam,Dexit Global Limited - Khammam,10-MAY-2026,10
@@ -621,7 +621,6 @@ Uttar Pradesh,Agra,Dexit Global Limited - Agra,27-APR-2026,2
 Uttar Pradesh,Agra,Dexit Global Limited - Agra,28-APR-2026,14
 Uttar Pradesh,Agra,Dexit Global Limited - Agra,28-APR-2026,2
 Uttar Pradesh,Agra,Dexit Global Limited - Agra,28-APR-2026,9
-Uttar Pradesh,Agra,Dexit Global Limited - Agra,29-APR-2026,1
 Uttar Pradesh,Agra,Dexit Global Limited - Agra,29-APR-2026,11
 Uttar Pradesh,Aligarh,Dexit Global Limited - Aligarh,03-MAY-2026,13
 Uttar Pradesh,Aligarh,Dexit Global Limited - Aligarh,10-MAY-2026,13
@@ -658,7 +657,7 @@ Uttar Pradesh,Kanpur,Dexit Global Limited - Kanpur,27-APR-2026,14
 Uttar Pradesh,Kanpur,Dexit Global Limited - Kanpur,27-APR-2026,2
 Uttar Pradesh,Kanpur,Dexit Global Limited - Kanpur,28-APR-2026,3
 Uttar Pradesh,Kanpur,Dexit Global Limited - Kanpur,29-APR-2026,1
-Uttar Pradesh,Kanpur,Dexit Global Limited - Kanpur,29-APR-2026,12
+Uttar Pradesh,Kanpur,Dexit Global Limited - Kanpur,29-APR-2026,11
 Uttar Pradesh,Lucknow,Dexit Global Limited - Lucknow,04-MAY-2026,10
 Uttar Pradesh,Lucknow,Dexit Global Limited - Lucknow,05-MAY-2026,10
 Uttar Pradesh,Lucknow,Dexit Global Limited - Lucknow,06-MAY-2026,20

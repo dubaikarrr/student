@@ -72,6 +72,12 @@
         font-size: 0.95rem;
       }
 
+      .note {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
       .filters,
       .results {
         margin-top: 24px;
@@ -226,7 +232,12 @@
         <div class="meta">
           <div class="chip" id="generatedAt">Latest scan: loading...</div>
           <div class="chip" id="totalCount">Available entries: ...</div>
+          <div class="chip">Seats are refreshed hourly</div>
         </div>
+        <p class="note">
+          Cities stay visible even when there are no openings right now, so students can still check
+          their preferred location in the latest hourly update.
+        </p>
       </section>
 
       <section class="filters">
@@ -302,7 +313,10 @@
         for (const row of filteredCities) {
           const option = document.createElement("option");
           option.value = row.city;
-          option.textContent = `${row.city} (${row.available_count})`;
+          option.textContent =
+            row.available_count > 0
+              ? `${row.city} (${row.available_count})`
+              : `${row.city} (No seats)`;
           citySelect.appendChild(option);
         }
       }
@@ -334,7 +348,7 @@
       function renderRows(rows) {
         if (!rows.length) {
           content.innerHTML =
-            '<div class="empty">No available seats matched this filter in the latest scan.</div>';
+            '<div class="empty">No seats are available for this selection in the latest hourly scan. Try another city or check again after the next refresh.</div>';
           return;
         }
 
