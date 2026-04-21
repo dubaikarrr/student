@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SPOM Seat Availability</title>
+    <style>
+      :root {
+        --bg: #f5efe3;
+        --panel: rgba(255, 250, 242, 0.92);
+        --ink: #1b1a17;
+        --muted: #5f5a51;
+        --line: #d9cdb8;
+        --accent: #a33b20;
+        --accent-2: #245c4f;
+        --good: #1e7a37;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(163, 59, 32, 0.18), transparent 32%),
+          radial-gradient(circle at top right, rgba(36, 92, 79, 0.18), transparent 30%),
+          linear-gradient(180deg, #f7f0e1 0%, #efe3cf 100%);
+      }
+
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 18px 56px;
+      }
+
+      .hero {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 20px 50px rgba(74, 54, 28, 0.08);
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        line-height: 0.95;
+      }
+
+      .sub {
+        margin: 0;
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 1.02rem;
+      }
+
+      .meta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+      }
+
+      .filters,
+      .results {
+        margin-top: 24px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 22px;
+      }
+
+      .filters-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        align-items: end;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      select,
+      button {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        padding: 12px 14px;
+        font: inherit;
+      }
+
+      button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        background: #efe5d4;
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+      }
+
+      th {
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .status {
+        margin: 0 0 16px;
+        color: var(--accent-2);
+      }
+
+      .empty {
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--muted);
+      }
+
+      .capacity {
+        color: var(--good);
+        font-weight: 700;
+      }
+
+      @media (max-width: 640px) {
+        .wrap {
+          padding-top: 18px;
+        }
+
+        .hero,
+        .filters,
+        .results {
+          border-radius: 18px;
+          padding: 18px;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tbody {
+          display: grid;
+          gap: 12px;
+        }
+
+        tr {
+          background: rgba(255, 255, 255, 0.78);
+          border: 1px solid var(--line);
+          border-radius: 16px;
+          padding: 10px 12px;
+        }
+
+        td {
+          border-bottom: none;
+          padding: 6px 0;
+          white-space: normal;
+        }
+
+        td::before {
+          content: attr(data-label);
+          display: block;
+          color: var(--muted);
+          font-size: 0.8rem;
+          margin-bottom: 2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="hero">
+        <h1>SPOM Seat Availability</h1>
+        <p class="sub">
+          A shared public dashboard for ICAI SPOM seat availability. The data is refreshed by a
+          scheduled background scan and shows only locations where seats are currently open.
+        </p>
+        <div class="meta">
+          <div class="chip" id="generatedAt">Latest scan: loading...</div>
+          <div class="chip" id="totalCount">Available entries: ...</div>
+        </div>
+      </section>
+
+      <section class="filters">
+        <div class="filters-grid">
+          <div>
+            <label for="stateSelect">State</label>
+            <select id="stateSelect">
+              <option value="">All states</option>
+            </select>
+          </div>
+          <div>
+            <label for="citySelect">City</label>
+            <select id="citySelect">
+              <option value="">All cities</option>
+            </select>
+          </div>
+          <div class="toolbar">
+            <button id="applyBtn" type="button">Apply Filters</button>
+            <button id="resetBtn" type="button" class="secondary">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="results">
+        <p class="status" id="statusText">Loading latest availability...</p>
+        <div id="content"></div>
+      </section>
+    </div>
+
+    <script>
+      const stateSelect = document.getElementById("stateSelect");
+      const citySelect = document.getElementById("citySelect");
+      const applyBtn = document.getElementById("applyBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const generatedAt = document.getElementById("generatedAt");
+      const totalCount = document.getElementById("totalCount");
+      const statusText = document.getElementById("statusText");
+      const content = document.getElementById("content");
+
+      let stateRows = [];
+      let cityRows = [];
+
+      async function init() {
+        await loadSummary();
+        await loadLatest();
+      }
+
+      async function loadSummary() {
+        const response = await fetch("./data/summary.json", { cache: "no-store" });
+        const data = await response.json();
+        stateRows = data.states || [];
+        cityRows = data.cities || [];
+
+        populateStates();
+        populateCities();
+      }
+
+      function populateStates() {
+        stateSelect.innerHTML = '<option value="">All states</option>';
+        for (const row of stateRows) {
+          const option = document.createElement("option");
+          option.value = row.state;
+          option.textContent = `${row.state} (${row.available_count})`;
+          stateSelect.appendChild(option);
+        }
+      }
+
+      function populateCities() {
+        const selectedState = stateSelect.value;
+        citySelect.innerHTML = '<option value="">All cities</option>';
+
+        const filteredCities = cityRows.filter((row) => !selectedState || row.state === selectedState);
+        for (const row of filteredCities) {
+          const option = document.createElement("option");
+          option.value = row.city;
+          option.textContent = `${row.city} (${row.available_count})`;
+          citySelect.appendChild(option);
+        }
+      }
+
+      async function loadLatest() {
+        statusText.textContent = "Loading latest availability...";
+        const response = await fetch("./data/latest.json", { cache: "no-store" });
+        const data = await response.json();
+
+        let rows = data.rows || [];
+        if (stateSelect.value) {
+          rows = rows.filter((row) => row.state === stateSelect.value);
+        }
+        if (citySelect.value) {
+          rows = rows.filter((row) => row.city === citySelect.value);
+        }
+
+        generatedAt.textContent = data.generatedAt
+          ? `Latest scan: ${new Date(data.generatedAt).toLocaleString()}`
+          : "Latest scan: not available yet";
+        totalCount.textContent = `Available entries: ${rows.length}`;
+
+        renderRows(rows);
+        statusText.textContent = data.generatedAt
+          ? "Showing the most recent saved snapshot."
+          : "No completed scan found yet.";
+      }
+
+      function renderRows(rows) {
+        if (!rows.length) {
+          content.innerHTML =
+            '<div class="empty">No available seats matched this filter in the latest scan.</div>';
+          return;
+        }
+
+        const html = [
+          '<div class="table-wrap"><table>',
+          "<thead><tr><th>State</th><th>City</th><th>Centre</th><th>Date</th><th>Capacity</th></tr></thead>",
+          "<tbody>",
+          ...rows.map(
+            (row) =>
+              `<tr><td data-label="State">${escapeHtml(row.state)}</td><td data-label="City">${escapeHtml(
+                row.city
+              )}</td><td data-label="Centre">${escapeHtml(row.centre)}</td><td data-label="Date">${escapeHtml(
+                row.date
+              )}</td><td data-label="Capacity" class="capacity">${escapeHtml(String(row.capacity))}</td></tr>`
+          ),
+          "</tbody></table></div>",
+        ];
+        content.innerHTML = html.join("");
+      }
+
+      function escapeHtml(value) {
+        return value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      stateSelect.addEventListener("change", () => {
+        populateCities();
+      });
+
+      applyBtn.addEventListener("click", loadLatest);
+      resetBtn.addEventListener("click", async () => {
+        stateSelect.value = "";
+        populateCities();
+        citySelect.value = "";
+        await loadLatest();
+      });
+
+      init().catch((error) => {
+        statusText.textContent = "Could not load data right now.";
+        content.innerHTML = `<div class="empty">${escapeHtml(error.message || String(error))}</div>`;
+      });
+    </script>
+  </body>
+</html>

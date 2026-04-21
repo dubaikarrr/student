@@ -1,0 +1,12 @@
+[
+  {
+    "email": "student@example.com",
+    "states": ["Maharashtra"],
+    "cities": ["Mumbai"]
+  },
+  {
+    "email": "another-student@example.com",
+    "states": ["Delhi"],
+    "cities": []
+  }
+]

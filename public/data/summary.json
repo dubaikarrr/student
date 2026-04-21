@@ -1,0 +1,975 @@
+{
+  "generatedAt": "2026-04-22 01:23:37 India Standard Time",
+  "states": [
+    {
+      "state": "Andaman And Nicobar",
+      "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "available_count": 62
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "available_count": 2
+    },
+    {
+      "state": "Assam",
+      "available_count": 8
+    },
+    {
+      "state": "Bihar",
+      "available_count": 42
+    },
+    {
+      "state": "Chhattisgarh",
+      "available_count": 8
+    },
+    {
+      "state": "Delhi",
+      "available_count": 10
+    },
+    {
+      "state": "Delhi Ncr",
+      "available_count": 33
+    },
+    {
+      "state": "Goa",
+      "available_count": 1
+    },
+    {
+      "state": "Gujarat",
+      "available_count": 34
+    },
+    {
+      "state": "Haryana",
+      "available_count": 30
+    },
+    {
+      "state": "Himachal Pradesh",
+      "available_count": 6
+    },
+    {
+      "state": "Jammu And Kashmir",
+      "available_count": 9
+    },
+    {
+      "state": "Jharkhand",
+      "available_count": 11
+    },
+    {
+      "state": "Karnataka",
+      "available_count": 12
+    },
+    {
+      "state": "Kerala",
+      "available_count": 22
+    },
+    {
+      "state": "Madhya Pradesh",
+      "available_count": 49
+    },
+    {
+      "state": "Maharashtra",
+      "available_count": 106
+    },
+    {
+      "state": "Manipur",
+      "available_count": 2
+    },
+    {
+      "state": "Meghalaya",
+      "available_count": 1
+    },
+    {
+      "state": "Nagaland",
+      "available_count": 1
+    },
+    {
+      "state": "Odisha",
+      "available_count": 10
+    },
+    {
+      "state": "Pondicherry",
+      "available_count": 2
+    },
+    {
+      "state": "Punjab",
+      "available_count": 35
+    },
+    {
+      "state": "Rajasthan",
+      "available_count": 75
+    },
+    {
+      "state": "Sikkim",
+      "available_count": 2
+    },
+    {
+      "state": "Tamil Nadu",
+      "available_count": 24
+    },
+    {
+      "state": "Telangana",
+      "available_count": 11
+    },
+    {
+      "state": "Tripura",
+      "available_count": 2
+    },
+    {
+      "state": "Uttar Pradesh",
+      "available_count": 87
+    },
+    {
+      "state": "Uttarakhand",
+      "available_count": 7
+    },
+    {
+      "state": "West Bengal",
+      "available_count": 5
+    }
+  ],
+  "cities": [
+    {
+      "state": "Andaman And Nicobar",
+      "city": "Port Blair",
+      "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Anantapur",
+      "available_count": 4
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Eluru",
+      "available_count": 2
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Guntur",
+      "available_count": 16
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Kadapa",
+      "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Kurnool",
+      "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Nellore",
+      "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Ongole",
+      "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Rajamahendravaram",
+      "available_count": 1
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Srikakulam",
+      "available_count": 2
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Tirupati",
+      "available_count": 10
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Vijayawada",
+      "available_count": 12
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Visakhapatnam",
+      "available_count": 10
+    },
+    {
+      "state": "Andhra Pradesh",
+      "city": "Vizianagaram",
+      "available_count": 1
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "city": "Itanagar",
+      "available_count": 2
+    },
+    {
+      "state": "Assam",
+      "city": "Dibrugarh",
+      "available_count": 2
+    },
+    {
+      "state": "Assam",
+      "city": "Guwahati",
+      "available_count": 3
+    },
+    {
+      "state": "Assam",
+      "city": "Jorhat",
+      "available_count": 2
+    },
+    {
+      "state": "Assam",
+      "city": "Silchar",
+      "available_count": 1
+    },
+    {
+      "state": "Bihar",
+      "city": "Begusarai",
+      "available_count": 6
+    },
+    {
+      "state": "Bihar",
+      "city": "Bhagalpur",
+      "available_count": 6
+    },
+    {
+      "state": "Bihar",
+      "city": "Gaya",
+      "available_count": 6
+    },
+    {
+      "state": "Bihar",
+      "city": "Motihari",
+      "available_count": 5
+    },
+    {
+      "state": "Bihar",
+      "city": "Muzaffarpur",
+      "available_count": 4
+    },
+    {
+      "state": "Bihar",
+      "city": "Patna",
+      "available_count": 11
+    },
+    {
+      "state": "Bihar",
+      "city": "Purnea",
+      "available_count": 4
+    },
+    {
+      "state": "Chhattisgarh",
+      "city": "Bilaspur",
+      "available_count": 1
+    },
+    {
+      "state": "Chhattisgarh",
+      "city": "Raipur",
+      "available_count": 7
+    },
+    {
+      "state": "Delhi",
+      "city": "Delhi New Delhi",
+      "available_count": 10
+    },
+    {
+      "state": "Delhi Ncr",
+      "city": "Faridabad",
+      "available_count": 10
+    },
+    {
+      "state": "Delhi Ncr",
+      "city": "Ghaziabad",
+      "available_count": 5
+    },
+    {
+      "state": "Delhi Ncr",
+      "city": "Gurugram",
+      "available_count": 5
+    },
+    {
+      "state": "Delhi Ncr",
+      "city": "Noida",
+      "available_count": 13
+    },
+    {
+      "state": "Goa",
+      "city": "Panjim",
+      "available_count": 1
+    },
+    {
+      "state": "Gujarat",
+      "city": "Ankleshwar",
+      "available_count": 2
+    },
+    {
+      "state": "Gujarat",
+      "city": "Gandhidham",
+      "available_count": 1
+    },
+    {
+      "state": "Gujarat",
+      "city": "Jamnagar",
+      "available_count": 1
+    },
+    {
+      "state": "Gujarat",
+      "city": "Junagadh",
+      "available_count": 3
+    },
+    {
+      "state": "Gujarat",
+      "city": "Palanpur",
+      "available_count": 4
+    },
+    {
+      "state": "Gujarat",
+      "city": "Rajkot",
+      "available_count": 11
+    },
+    {
+      "state": "Gujarat",
+      "city": "Surendranagar",
+      "available_count": 4
+    },
+    {
+      "state": "Gujarat",
+      "city": "Vadodara",
+      "available_count": 6
+    },
+    {
+      "state": "Gujarat",
+      "city": "Valsad",
+      "available_count": 2
+    },
+    {
+      "state": "Haryana",
+      "city": "Hisar",
+      "available_count": 2
+    },
+    {
+      "state": "Haryana",
+      "city": "Jind",
+      "available_count": 6
+    },
+    {
+      "state": "Haryana",
+      "city": "Karnal",
+      "available_count": 6
+    },
+    {
+      "state": "Haryana",
+      "city": "Rewari",
+      "available_count": 1
+    },
+    {
+      "state": "Haryana",
+      "city": "Rohtak",
+      "available_count": 3
+    },
+    {
+      "state": "Haryana",
+      "city": "Sirsa",
+      "available_count": 6
+    },
+    {
+      "state": "Haryana",
+      "city": "Yamunanagar",
+      "available_count": 6
+    },
+    {
+      "state": "Himachal Pradesh",
+      "city": "Shimla",
+      "available_count": 6
+    },
+    {
+      "state": "Jammu And Kashmir",
+      "city": "Jammu",
+      "available_count": 5
+    },
+    {
+      "state": "Jammu And Kashmir",
+      "city": "Srinagar",
+      "available_count": 4
+    },
+    {
+      "state": "Jharkhand",
+      "city": "Bokaro Steel City",
+      "available_count": 1
+    },
+    {
+      "state": "Jharkhand",
+      "city": "Deoghar",
+      "available_count": 2
+    },
+    {
+      "state": "Jharkhand",
+      "city": "Dhanbad",
+      "available_count": 1
+    },
+    {
+      "state": "Jharkhand",
+      "city": "Hazaribagh",
+      "available_count": 3
+    },
+    {
+      "state": "Jharkhand",
+      "city": "Jamshedpur",
+      "available_count": 2
+    },
+    {
+      "state": "Jharkhand",
+      "city": "Ranchi",
+      "available_count": 2
+    },
+    {
+      "state": "Karnataka",
+      "city": "Bagalkot",
+      "available_count": 2
+    },
+    {
+      "state": "Karnataka",
+      "city": "Bellary",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Chikkaballapur",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Davangere",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Gulbarga",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Hassan",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Hubli",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Raichur",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Shimoga",
+      "available_count": 1
+    },
+    {
+      "state": "Karnataka",
+      "city": "Vijayapura",
+      "available_count": 2
+    },
+    {
+      "state": "Kerala",
+      "city": "Kattappana",
+      "available_count": 2
+    },
+    {
+      "state": "Kerala",
+      "city": "Kollam",
+      "available_count": 2
+    },
+    {
+      "state": "Kerala",
+      "city": "Kottayam",
+      "available_count": 2
+    },
+    {
+      "state": "Kerala",
+      "city": "Pathanamthitta",
+      "available_count": 2
+    },
+    {
+      "state": "Kerala",
+      "city": "Thiruvananthapuram",
+      "available_count": 2
+    },
+    {
+      "state": "Kerala",
+      "city": "Thrissur",
+      "available_count": 12
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Bhopal",
+      "available_count": 13
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Gwalior",
+      "available_count": 4
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Indore",
+      "available_count": 8
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Jabalpur",
+      "available_count": 4
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Khandwa",
+      "available_count": 4
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Mandsaur",
+      "available_count": 4
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Rewa",
+      "available_count": 4
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Sagar",
+      "available_count": 5
+    },
+    {
+      "state": "Madhya Pradesh",
+      "city": "Satna",
+      "available_count": 3
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Ahmednagar",
+      "available_count": 3
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Akola",
+      "available_count": 2
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Amaravati",
+      "available_count": 1
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Aurangabad",
+      "available_count": 13
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Beed",
+      "available_count": 5
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Belapur Navi Mumbai",
+      "available_count": 5
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Chandrapur",
+      "available_count": 6
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Dhule",
+      "available_count": 3
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Jalgaon",
+      "available_count": 3
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Kolhapur",
+      "available_count": 2
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Latur",
+      "available_count": 5
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "available_count": 8
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Nagpur",
+      "available_count": 8
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Nanded",
+      "available_count": 3
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Nashik",
+      "available_count": 8
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Parbhani",
+      "available_count": 5
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Pimpri Chinchwad",
+      "available_count": 1
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Ratnagiri",
+      "available_count": 6
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Satara",
+      "available_count": 6
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Solapur",
+      "available_count": 3
+    },
+    {
+      "state": "Maharashtra",
+      "city": "Virar",
+      "available_count": 10
+    },
+    {
+      "state": "Manipur",
+      "city": "Imphal",
+      "available_count": 2
+    },
+    {
+      "state": "Meghalaya",
+      "city": "Shillong",
+      "available_count": 1
+    },
+    {
+      "state": "Nagaland",
+      "city": "Dimapur",
+      "available_count": 1
+    },
+    {
+      "state": "Odisha",
+      "city": "Balangir",
+      "available_count": 2
+    },
+    {
+      "state": "Odisha",
+      "city": "Berhmapur",
+      "available_count": 1
+    },
+    {
+      "state": "Odisha",
+      "city": "Bhubaneshwar",
+      "available_count": 3
+    },
+    {
+      "state": "Odisha",
+      "city": "Rourkela",
+      "available_count": 3
+    },
+    {
+      "state": "Odisha",
+      "city": "Sambalpur",
+      "available_count": 1
+    },
+    {
+      "state": "Pondicherry",
+      "city": "Puducherry",
+      "available_count": 2
+    },
+    {
+      "state": "Punjab",
+      "city": "Amritsar",
+      "available_count": 3
+    },
+    {
+      "state": "Punjab",
+      "city": "Bathinda",
+      "available_count": 2
+    },
+    {
+      "state": "Punjab",
+      "city": "Chandigarh",
+      "available_count": 8
+    },
+    {
+      "state": "Punjab",
+      "city": "Jalandhar",
+      "available_count": 3
+    },
+    {
+      "state": "Punjab",
+      "city": "Ludhiana",
+      "available_count": 10
+    },
+    {
+      "state": "Punjab",
+      "city": "Pathankot",
+      "available_count": 5
+    },
+    {
+      "state": "Punjab",
+      "city": "Patiala",
+      "available_count": 4
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Ajmer",
+      "available_count": 4
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Alwar",
+      "available_count": 5
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Banswara",
+      "available_count": 4
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Bharatpur",
+      "available_count": 4
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Bikaner",
+      "available_count": 2
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Chittorgarh",
+      "available_count": 6
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Jaipur",
+      "available_count": 9
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Jodhpur",
+      "available_count": 8
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Nagaur",
+      "available_count": 7
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Sikar",
+      "available_count": 5
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Sriganganagar",
+      "available_count": 6
+    },
+    {
+      "state": "Rajasthan",
+      "city": "Udaipur",
+      "available_count": 15
+    },
+    {
+      "state": "Sikkim",
+      "city": "Gangtok",
+      "available_count": 2
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Chennai",
+      "available_count": 8
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Coimbatore",
+      "available_count": 5
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Madurai",
+      "available_count": 1
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Salem",
+      "available_count": 2
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Thanjavur",
+      "available_count": 2
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Tiruchirapalli",
+      "available_count": 2
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Tirunelvelli",
+      "available_count": 1
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Tiruvannamalai",
+      "available_count": 2
+    },
+    {
+      "state": "Tamil Nadu",
+      "city": "Vellore",
+      "available_count": 1
+    },
+    {
+      "state": "Telangana",
+      "city": "Adilabad",
+      "available_count": 2
+    },
+    {
+      "state": "Telangana",
+      "city": "Hyderabad",
+      "available_count": 2
+    },
+    {
+      "state": "Telangana",
+      "city": "Karimnagar",
+      "available_count": 2
+    },
+    {
+      "state": "Telangana",
+      "city": "Khammam",
+      "available_count": 1
+    },
+    {
+      "state": "Telangana",
+      "city": "Mahabubnagar",
+      "available_count": 1
+    },
+    {
+      "state": "Telangana",
+      "city": "Nalgonda",
+      "available_count": 1
+    },
+    {
+      "state": "Telangana",
+      "city": "Nizamabad",
+      "available_count": 1
+    },
+    {
+      "state": "Telangana",
+      "city": "Warangal",
+      "available_count": 1
+    },
+    {
+      "state": "Tripura",
+      "city": "Agartala",
+      "available_count": 2
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Agra",
+      "available_count": 13
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Aligarh",
+      "available_count": 6
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Bareilly",
+      "available_count": 6
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Gorakhpur",
+      "available_count": 6
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Jhansi",
+      "available_count": 6
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Kanpur",
+      "available_count": 12
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Lucknow",
+      "available_count": 15
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Meerut",
+      "available_count": 6
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Moradabad",
+      "available_count": 6
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Prayagraj",
+      "available_count": 5
+    },
+    {
+      "state": "Uttar Pradesh",
+      "city": "Varanasi",
+      "available_count": 6
+    },
+    {
+      "state": "Uttarakhand",
+      "city": "Dehradun",
+      "available_count": 2
+    },
+    {
+      "state": "Uttarakhand",
+      "city": "Haldwani",
+      "available_count": 5
+    },
+    {
+      "state": "West Bengal",
+      "city": "Kharagpur",
+      "available_count": 1
+    },
+    {
+      "state": "West Bengal",
+      "city": "Kolkata",
+      "available_count": 2
+    },
+    {
+      "state": "West Bengal",
+      "city": "Siliguri",
+      "available_count": 2
+    }
+  ]
+}

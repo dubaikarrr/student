@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "spom-seat-checker",
+  "main": "src/index.js",
+  "compatibility_date": "2026-04-22",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "spom-seat-checker",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "30 3 * * *"
+    ]
+  }
+}

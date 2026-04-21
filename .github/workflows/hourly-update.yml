@@ -1,0 +1,77 @@
+name: Update SPOM Seats
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7 * * * *"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: spom-seat-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Preserve previous snapshot
+        run: |
+          mkdir -p public/data
+          if [ -f public/data/latest.json ]; then
+            cp public/data/latest.json public/data/previous-latest.json
+          else
+            echo '{"rows":[]}' > public/data/previous-latest.json
+          fi
+
+      - name: Run scanner
+        run: python spom_seat_checker.py --stdout
+
+      - name: Send alerts when configured
+        if: ${{ secrets.RESEND_API_KEY != '' && secrets.RESEND_FROM_EMAIL != '' }}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
+        run: python send_alerts.py
+
+      - name: Remove temporary snapshot
+        run: rm -f public/data/previous-latest.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports public/data
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update SPOM seat data"
+            git push
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

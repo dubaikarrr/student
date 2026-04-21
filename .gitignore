@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+preview_server.log
+preview_server.err.log
+preview_server_8001.log
+preview_server_8001.err.log
+
+subscribers.json
+
+.wrangler/
+node_modules/
