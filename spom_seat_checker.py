@@ -51,6 +51,25 @@ class ScanCatalog:
     cities_by_state: dict[str, list[str]]
 
 
+def load_existing_json(path: Path, fallback: object) -> object:
+    if not path.exists():
+        return fallback
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return fallback
+
+
+def row_to_payload(row: AvailabilityRow) -> dict[str, object]:
+    return {
+        "state": row.state,
+        "city": row.city,
+        "centre": row.centre,
+        "date": row.date,
+        "capacity": row.capacity,
+    }
+
+
 class SpomClient:
     def __init__(self, timeout: int = DEFAULT_TIMEOUT, retries: int = DEFAULT_RETRIES) -> None:
         self.timeout = timeout
@@ -267,23 +286,33 @@ def write_markdown(rows: list[AvailabilityRow], output_path: Path, generated_at:
 
 
 def write_public_data(
-    rows: list[AvailabilityRow], catalog: ScanCatalog, output_dir: Path, generated_at: str
+    rows: list[AvailabilityRow],
+    catalog: ScanCatalog,
+    output_dir: Path,
+    generated_at: str,
+    generated_at_iso: str,
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
+    previous_latest = load_existing_json(output_dir / "latest.json", {"rows": []})
+    previous_rows = previous_latest.get("rows", []) if isinstance(previous_latest, dict) else []
+    previous_row_keys = {
+        (
+            str(item.get("state", "")),
+            str(item.get("city", "")),
+            str(item.get("centre", "")),
+            str(item.get("date", "")),
+            int(item.get("capacity", 0)),
+        )
+        for item in previous_rows
+        if isinstance(item, dict)
+    }
 
     latest_payload = {
+        "generatedAtIso": generated_at_iso,
         "generatedAt": generated_at,
+        "generatedAtDisplay": generated_at,
         "total": len(rows),
-        "rows": [
-            {
-                "state": row.state,
-                "city": row.city,
-                "centre": row.centre,
-                "date": row.date,
-                "capacity": row.capacity,
-            }
-            for row in rows
-        ],
+        "rows": [row_to_payload(row) for row in rows],
     }
 
     state_counts: dict[str, int] = defaultdict(int)
@@ -293,7 +322,9 @@ def write_public_data(
         city_counts[(row.state, row.city)] += 1
 
     summary_payload = {
+        "generatedAtIso": generated_at_iso,
         "generatedAt": generated_at,
+        "generatedAtDisplay": generated_at,
         "states": [
             {"state": state, "available_count": state_counts.get(state, 0)}
             for state in sorted(catalog.states)
@@ -309,11 +340,55 @@ def write_public_data(
         ],
     }
 
+    new_rows = [
+        row_to_payload(row)
+        for row in rows
+        if (
+            row.state,
+            row.city,
+            row.centre,
+            row.date,
+            row.capacity,
+        )
+        not in previous_row_keys
+    ]
+    new_city_set = sorted({(row["state"], row["city"]) for row in new_rows})
+    changes_payload = {
+        "generatedAtIso": generated_at_iso,
+        "generatedAt": generated_at,
+        "generatedAtDisplay": generated_at,
+        "newEntries": len(new_rows),
+        "newCities": [
+            {"state": state, "city": city}
+            for state, city in new_city_set
+        ],
+        "rows": new_rows,
+    }
+
+    existing_history = load_existing_json(output_dir / "history.json", {"items": []})
+    history_items = existing_history.get("items", []) if isinstance(existing_history, dict) else []
+    if not isinstance(history_items, list):
+        history_items = []
+    history_items.append(
+        {
+            "generatedAtIso": generated_at_iso,
+            "generatedAtDisplay": generated_at,
+            "total": len(rows),
+        }
+    )
+    history_payload = {"items": history_items[-72:]}
+
     (output_dir / "latest.json").write_text(
         json.dumps(latest_payload, indent=2), encoding="utf-8"
     )
     (output_dir / "summary.json").write_text(
         json.dumps(summary_payload, indent=2), encoding="utf-8"
+    )
+    (output_dir / "changes.json").write_text(
+        json.dumps(changes_payload, indent=2), encoding="utf-8"
+    )
+    (output_dir / "history.json").write_text(
+        json.dumps(history_payload, indent=2), encoding="utf-8"
     )
 
 
@@ -362,7 +437,9 @@ def main() -> int:
     output_dir = Path(args.output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    generated_at = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S %Z")
+    now = datetime.now(timezone.utc).astimezone()
+    generated_at = now.strftime("%Y-%m-%d %H:%M:%S %Z")
+    generated_at_iso = now.isoformat()
 
     client = SpomClient()
     try:
@@ -379,7 +456,7 @@ def main() -> int:
     write_csv(rows, csv_path)
     write_json(rows, json_path)
     write_markdown(rows, md_path, generated_at)
-    write_public_data(rows, catalog, public_data_dir, generated_at)
+    write_public_data(rows, catalog, public_data_dir, generated_at, generated_at_iso)
 
     latest_path = output_dir / "spom_latest_run.txt"
     latest_path.write_text(generated_at + "\n", encoding="utf-8")

@@ -816,7 +816,7 @@
     "city": "Raipur",
     "centre": "Dexit Global Limited - Raipur",
     "date": "04-MAY-2026",
-    "capacity": 8
+    "capacity": 7
   },
   {
     "state": "Chhattisgarh",
@@ -845,6 +845,13 @@
     "centre": "Dexit Global Limited - Raipur",
     "date": "07-MAY-2026",
     "capacity": 9
+  },
+  {
+    "state": "Chhattisgarh",
+    "city": "Raipur",
+    "centre": "Dexit Global Limited - Raipur",
+    "date": "09-MAY-2026",
+    "capacity": 8
   },
   {
     "state": "Chhattisgarh",

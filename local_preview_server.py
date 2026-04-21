@@ -37,11 +37,8 @@ class Handler(BaseHTTPRequestHandler):
         if parsed.path == "/" or parsed.path == "/index.html":
             return self.serve_file(PUBLIC_DIR / "index.html", "text/html; charset=utf-8")
 
-        if parsed.path == "/data/latest.json":
-            return self.serve_file(PUBLIC_DIR / "data" / "latest.json", "application/json; charset=utf-8")
-
-        if parsed.path == "/data/summary.json":
-            return self.serve_file(PUBLIC_DIR / "data" / "summary.json", "application/json; charset=utf-8")
+        if parsed.path.startswith("/data/") and parsed.path.endswith(".json"):
+            return self.serve_file(PUBLIC_DIR / parsed.path.lstrip("/"), "application/json; charset=utf-8")
 
         if parsed.path == "/api/health":
             return self.send_json({"ok": True, "service": "spom-seat-checker-local"})

@@ -1,0 +1,28 @@
+{
+  "generatedAtIso": "2026-04-22T03:23:48.875646+05:30",
+  "generatedAt": "2026-04-22 03:23:48 India Standard Time",
+  "generatedAtDisplay": "2026-04-22 03:23:48 India Standard Time",
+  "newEntries": 2,
+  "newCities": [
+    {
+      "state": "Chhattisgarh",
+      "city": "Raipur"
+    }
+  ],
+  "rows": [
+    {
+      "state": "Chhattisgarh",
+      "city": "Raipur",
+      "centre": "Dexit Global Limited - Raipur",
+      "date": "04-MAY-2026",
+      "capacity": 7
+    },
+    {
+      "state": "Chhattisgarh",
+      "city": "Raipur",
+      "centre": "Dexit Global Limited - Raipur",
+      "date": "09-MAY-2026",
+      "capacity": 8
+    }
+  ]
+}

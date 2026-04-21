@@ -1,7 +1,7 @@
 # SPOM Seat Availability Report
 
-Generated at: 2026-04-22 03:12:19 India Standard Time
-Available entries found: 709
+Generated at: 2026-04-22 03:23:48 India Standard Time
+Available entries found: 710
 
 ## Andaman And Nicobar
 
@@ -270,11 +270,12 @@ Available entries found: 709
 | Centre | Date | Capacity |
 | --- | --- | ---: |
 | Dexit Global Limited - Raipur | 04-MAY-2026 | 10 |
-| Dexit Global Limited - Raipur | 04-MAY-2026 | 8 |
+| Dexit Global Limited - Raipur | 04-MAY-2026 | 7 |
 | Dexit Global Limited - Raipur | 05-MAY-2026 | 10 |
 | Dexit Global Limited - Raipur | 06-MAY-2026 | 10 |
 | Dexit Global Limited - Raipur | 07-MAY-2026 | 10 |
 | Dexit Global Limited - Raipur | 07-MAY-2026 | 9 |
+| Dexit Global Limited - Raipur | 09-MAY-2026 | 8 |
 | Dexit Global Limited - Raipur | 09-MAY-2026 | 9 |
 
 ## Delhi

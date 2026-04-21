@@ -1,5 +1,7 @@
 {
-  "generatedAt": "2026-04-22 03:12:19 India Standard Time",
+  "generatedAtIso": "2026-04-22T03:23:48.875646+05:30",
+  "generatedAt": "2026-04-22 03:23:48 India Standard Time",
+  "generatedAtDisplay": "2026-04-22 03:23:48 India Standard Time",
   "states": [
     {
       "state": "Andaman And Nicobar",
@@ -23,7 +25,7 @@
     },
     {
       "state": "Chhattisgarh",
-      "available_count": 8
+      "available_count": 9
     },
     {
       "state": "Delhi",
@@ -318,7 +320,7 @@
     {
       "state": "Chhattisgarh",
       "city": "Raipur",
-      "available_count": 7
+      "available_count": 8
     },
     {
       "state": "Delhi",
