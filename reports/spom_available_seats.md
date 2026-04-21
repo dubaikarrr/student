@@ -1,6 +1,6 @@
 # SPOM Seat Availability Report
 
-Generated at: 2026-04-22 03:23:48 India Standard Time
+Generated at: 2026-04-22 03:30:59 India Standard Time
 Available entries found: 710
 
 ## Andaman And Nicobar
@@ -294,7 +294,7 @@ Available entries found: 710
 | Dexit Global Limited - Delhi New Delhi | 07-MAY-2026 | 29 |
 | Dexit Global Limited - Delhi New Delhi | 09-MAY-2026 | 13 |
 | Dexit Global Limited - Delhi New Delhi | 09-MAY-2026 | 20 |
-| Dexit Global Limited - Delhi New Delhi | 10-MAY-2026 | 11 |
+| Dexit Global Limited - Delhi New Delhi | 10-MAY-2026 | 10 |
 
 ## Delhi Ncr
 

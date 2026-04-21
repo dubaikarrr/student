@@ -1,28 +1,21 @@
 {
-  "generatedAtIso": "2026-04-22T03:23:48.875646+05:30",
-  "generatedAt": "2026-04-22 03:23:48 India Standard Time",
-  "generatedAtDisplay": "2026-04-22 03:23:48 India Standard Time",
-  "newEntries": 2,
+  "generatedAtIso": "2026-04-22T03:30:59.812199+05:30",
+  "generatedAt": "2026-04-22 03:30:59 India Standard Time",
+  "generatedAtDisplay": "2026-04-22 03:30:59 India Standard Time",
+  "newEntries": 1,
   "newCities": [
     {
-      "state": "Chhattisgarh",
-      "city": "Raipur"
+      "state": "Delhi",
+      "city": "Delhi New Delhi"
     }
   ],
   "rows": [
     {
-      "state": "Chhattisgarh",
-      "city": "Raipur",
-      "centre": "Dexit Global Limited - Raipur",
-      "date": "04-MAY-2026",
-      "capacity": 7
-    },
-    {
-      "state": "Chhattisgarh",
-      "city": "Raipur",
-      "centre": "Dexit Global Limited - Raipur",
-      "date": "09-MAY-2026",
-      "capacity": 8
+      "state": "Delhi",
+      "city": "Delhi New Delhi",
+      "centre": "Dexit Global Limited - Delhi New Delhi",
+      "date": "10-MAY-2026",
+      "capacity": 10
     }
   ]
 }

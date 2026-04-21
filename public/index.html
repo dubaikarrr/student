@@ -252,6 +252,19 @@
         color: var(--muted);
       }
 
+      .recommend-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .recommend-card {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: #fffdf8;
+      }
+
       @media (max-width: 640px) {
         .wrap {
           padding-top: 18px;
@@ -345,6 +358,7 @@
         <h2>Latest Results</h2>
         <p class="status" id="statusText">Loading latest availability...</p>
         <div id="content"></div>
+        <div id="recommendations"></div>
       </section>
 
       <section class="extras">
@@ -385,6 +399,7 @@
       const totalCount = document.getElementById("totalCount");
       const statusText = document.getElementById("statusText");
       const content = document.getElementById("content");
+      const recommendations = document.getElementById("recommendations");
       const changesText = document.getElementById("changesText");
       const changesList = document.getElementById("changesList");
       const historyList = document.getElementById("historyList");
@@ -531,9 +546,11 @@
             : "No seats are currently available for this selection in the latest hourly scan.";
 
         renderRows(rows);
+        renderRecommendations(rows);
       }
 
       function renderRows(rows) {
+        recommendations.innerHTML = "";
         if (!rows.length) {
           content.innerHTML =
             '<div class="empty">No seats are available for this selection in the latest hourly scan. Try another city, remove some filters, or check again after the next refresh.</div>';
@@ -586,6 +603,74 @@
           });
 
         content.innerHTML = `<div class="group-list">${cards.join("")}</div>`;
+      }
+
+      function renderRecommendations(rows) {
+        if (rows.length > 0 || !citySelect.value) {
+          recommendations.innerHTML = "";
+          return;
+        }
+
+        const selectedCityMeta = (summaryPayload.cities || []).find(
+          (item) =>
+            item.state === stateSelect.value &&
+            item.city === citySelect.value &&
+            item.lat != null &&
+            item.lon != null
+        );
+        if (!selectedCityMeta) {
+          recommendations.innerHTML = "";
+          return;
+        }
+
+        const nearest = (summaryPayload.cities || [])
+          .filter((item) => item.available_count > 0 && item.lat != null && item.lon != null)
+          .map((item) => ({
+            ...item,
+            distanceKm: haversineKm(selectedCityMeta.lat, selectedCityMeta.lon, item.lat, item.lon),
+          }))
+          .filter((item) => Number.isFinite(item.distanceKm) && item.city !== selectedCityMeta.city)
+          .sort((a, b) => a.distanceKm - b.distanceKm)
+          .slice(0, 5);
+
+        if (!nearest.length) {
+          recommendations.innerHTML = "";
+          return;
+        }
+
+        recommendations.innerHTML = `
+          <section class="extras" style="margin-top: 18px">
+            <h3>Next Best Options Near ${escapeHtml(citySelect.value)}</h3>
+            <p class="muted">
+              Seats are not available in ${escapeHtml(citySelect.value)} right now. These are the 5 nearest tracked cities with open seats.
+            </p>
+            <div class="recommend-list">
+              ${nearest
+                .map(
+                  (item, index) => `
+                    <div class="recommend-card">
+                      <strong>#${index + 1} ${escapeHtml(item.city)}, ${escapeHtml(item.state)}</strong>
+                      <div class="muted">${Math.round(item.distanceKm)} km away</div>
+                      <div class="capacity">${escapeHtml(String(item.available_count))} open entry(s)</div>
+                    </div>
+                  `
+                )
+                .join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function haversineKm(lat1, lon1, lat2, lon2) {
+        const toRad = (value) => (value * Math.PI) / 180;
+        const earthKm = 6371;
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) ** 2 +
+          Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return earthKm * c;
       }
 
       function renderFavorites() {

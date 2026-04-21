@@ -23,6 +23,8 @@ SLOT_PAGE_URL = f"{BASE_URL}/LoginAction_showSlotDetails.action"
 INDIA_COUNTRY_PK = "1"
 DEFAULT_TIMEOUT = 90
 DEFAULT_RETRIES = 3
+ROOT = Path(__file__).resolve().parent
+CITY_COORDINATES_PATH = ROOT / "city_coordinates.json"
 DEFAULT_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -58,6 +60,21 @@ def load_existing_json(path: Path, fallback: object) -> object:
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return fallback
+
+
+def load_city_coordinates() -> dict[str, dict[str, float]]:
+    data = load_existing_json(CITY_COORDINATES_PATH, {})
+    if not isinstance(data, dict):
+        return {}
+    result: dict[str, dict[str, float]] = {}
+    for key, value in data.items():
+        if not isinstance(key, str) or not isinstance(value, dict):
+            continue
+        lat = value.get("lat")
+        lon = value.get("lon")
+        if isinstance(lat, (int, float)) and isinstance(lon, (int, float)):
+            result[key] = {"lat": float(lat), "lon": float(lon)}
+    return result
 
 
 def row_to_payload(row: AvailabilityRow) -> dict[str, object]:
@@ -294,6 +311,7 @@ def write_public_data(
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     previous_latest = load_existing_json(output_dir / "latest.json", {"rows": []})
+    city_coordinates = load_city_coordinates()
     previous_rows = previous_latest.get("rows", []) if isinstance(previous_latest, dict) else []
     previous_row_keys = {
         (
@@ -334,6 +352,8 @@ def write_public_data(
                 "state": state,
                 "city": city,
                 "available_count": city_counts.get((state, city), 0),
+                "lat": city_coordinates.get(f"{state}||{city}", {}).get("lat"),
+                "lon": city_coordinates.get(f"{state}||{city}", {}).get("lon"),
             }
             for state in sorted(catalog.cities_by_state)
             for city in sorted(catalog.cities_by_state[state])
