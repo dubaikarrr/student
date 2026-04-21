@@ -44,7 +44,7 @@ jobs:
         run: python spom_seat_checker.py --stdout
 
       - name: Send alerts when configured
-        if: ${{ secrets.RESEND_API_KEY != '' && secrets.RESEND_FROM_EMAIL != '' }}
+        if: ${{ env.RESEND_API_KEY != '' && env.RESEND_FROM_EMAIL != '' }}
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
