@@ -6,15 +6,12 @@
     <title>SPOM Seat Availability</title>
     <style>
       :root {
-        --bg: #f5efe3;
         --panel: rgba(255, 250, 242, 0.94);
         --ink: #1b1a17;
         --muted: #5f5a51;
         --line: #d9cdb8;
         --accent: #a33b20;
-        --accent-2: #245c4f;
         --good: #1e7a37;
-        --warn: #8b5e00;
       }
 
       * {
@@ -32,17 +29,16 @@
       }
 
       .wrap {
-        max-width: 1200px;
+        max-width: 1120px;
         margin: 0 auto;
-        padding: 32px 18px 56px;
+        padding: 28px 18px 56px;
       }
 
       .hero,
       .filters,
-      .favorites,
       .results,
-      .extras {
-        margin-top: 24px;
+      .recommendations {
+        margin-top: 22px;
         background: var(--panel);
         border: 1px solid var(--line);
         border-radius: 24px;
@@ -57,12 +53,11 @@
 
       h1 {
         margin: 0 0 10px;
-        font-size: clamp(2rem, 6vw, 4.5rem);
-        line-height: 0.94;
+        font-size: clamp(2rem, 6vw, 4.2rem);
+        line-height: 0.95;
       }
 
-      h2,
-      h3 {
+      h2 {
         margin: 0 0 14px;
       }
 
@@ -70,37 +65,22 @@
         margin: 0;
         max-width: 860px;
         color: var(--muted);
-        font-size: 1.06rem;
-      }
-
-      .meta,
-      .pill-row,
-      .favorite-list,
-      .history-list {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+        font-size: 1.05rem;
       }
 
       .meta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
         margin-top: 18px;
       }
 
-      .chip,
-      .small-chip {
+      .chip {
         border: 1px solid var(--line);
+        padding: 10px 14px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.72);
-      }
-
-      .chip {
-        padding: 10px 14px;
         font-size: 0.95rem;
-      }
-
-      .small-chip {
-        padding: 7px 11px;
-        font-size: 0.85rem;
       }
 
       .note {
@@ -109,11 +89,10 @@
         font-size: 0.95rem;
       }
 
-      .filters-grid,
-      .extras-grid {
+      .filters-grid {
         display: grid;
         gap: 14px;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         align-items: end;
       }
 
@@ -124,7 +103,6 @@
         color: var(--muted);
       }
 
-      input[type="text"],
       select,
       button {
         width: 100%;
@@ -152,110 +130,55 @@
         display: flex;
         gap: 12px;
         flex-wrap: wrap;
+        margin-top: 14px;
       }
 
       .toolbar button {
         flex: 1 1 180px;
       }
 
-      .toggle-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-height: 48px;
-      }
-
-      .toggle-row input {
-        width: auto;
-      }
-
       .status {
-        margin: 0 0 14px;
-        color: var(--accent-2);
+        margin: 0 0 16px;
+        color: var(--muted);
       }
 
       .empty {
         padding: 18px;
         border-radius: 18px;
-        background: rgba(255, 255, 255, 0.72);
+        background: rgba(255, 255, 255, 0.74);
         color: var(--muted);
       }
 
-      .group-list {
-        display: grid;
-        gap: 14px;
+      .table-wrap {
+        overflow-x: auto;
       }
 
-      .group-card {
-        background: rgba(255, 255, 255, 0.78);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 16px;
+      table {
+        width: 100%;
+        border-collapse: collapse;
       }
 
-      .group-top {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        align-items: start;
-        flex-wrap: wrap;
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
       }
 
-      .group-title {
-        font-size: 1.08rem;
-        font-weight: 700;
-      }
-
-      .group-sub {
-        margin-top: 4px;
+      th {
         color: var(--muted);
-      }
-
-      .date-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-        gap: 10px;
-        margin-top: 14px;
-      }
-
-      .date-card {
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 10px 12px;
-        background: #fffdf8;
-      }
-
-      .date-label {
-        font-weight: 700;
+        font-weight: 600;
       }
 
       .capacity {
-        margin-top: 4px;
         color: var(--good);
         font-weight: 700;
-      }
-
-      .badge-new {
-        background: #f4e1b8;
-        color: var(--warn);
-      }
-
-      .favorite-list button {
-        width: auto;
-        background: #fffdf8;
-        color: var(--ink);
-        border: 1px solid var(--line);
-        padding: 8px 12px;
-      }
-
-      .muted {
-        color: var(--muted);
       }
 
       .recommend-list {
         display: grid;
         gap: 10px;
-        margin-top: 14px;
       }
 
       .recommend-card {
@@ -265,6 +188,10 @@
         background: #fffdf8;
       }
 
+      .muted {
+        color: var(--muted);
+      }
+
       @media (max-width: 640px) {
         .wrap {
           padding-top: 18px;
@@ -272,15 +199,15 @@
 
         .hero,
         .filters,
-        .favorites,
         .results,
-        .extras {
+        .recommendations {
           border-radius: 18px;
           padding: 18px;
         }
 
-        .group-top {
-          flex-direction: column;
+        th,
+        td {
+          white-space: normal;
         }
       }
     </style>
@@ -290,9 +217,9 @@
       <section class="hero">
         <h1>SPOM Seat Availability</h1>
         <p class="sub">
-          A shared public dashboard for ICAI SPOM seat availability. The data is refreshed by a
-          scheduled background scan and shows all tracked cities, including places that currently
-          have no open seats.
+          A shared public dashboard for ICAI SPOM seat availability. The data is refreshed by an
+          hourly background scan and shows tracked cities, including cities that currently have no
+          open seats.
         </p>
         <div class="meta">
           <div class="chip" id="generatedAt">Latest scan: loading...</div>
@@ -300,18 +227,14 @@
           <div class="chip">Seats are refreshed hourly</div>
         </div>
         <p class="note">
-          Latest scan time shows the last successful snapshot. If your city says no seats are
-          available, check again after the next hourly refresh.
+          Select a state and city to check availability. If no seats are open in that city, the
+          site will suggest the 5 nearest tracked cities with seats.
         </p>
       </section>
 
       <section class="filters">
-        <h2>Find Seats</h2>
+        <h2>Check Seats</h2>
         <div class="filters-grid">
-          <div>
-            <label for="searchInput">Search centre, city, or state</label>
-            <input id="searchInput" type="text" placeholder="Try Mumbai, Delhi, Rajkot..." />
-          </div>
           <div>
             <label for="stateSelect">State</label>
             <select id="stateSelect">
@@ -324,122 +247,53 @@
               <option value="">All cities</option>
             </select>
           </div>
-          <div>
-            <label for="fromDateSelect">From date</label>
-            <select id="fromDateSelect">
-              <option value="">Any date</option>
-            </select>
-          </div>
-          <div>
-            <label for="toDateSelect">To date</label>
-            <select id="toDateSelect">
-              <option value="">Any date</option>
-            </select>
-          </div>
-          <div class="toggle-row">
-            <input id="onlyWithSeatsToggle" type="checkbox" checked />
-            <label for="onlyWithSeatsToggle" style="margin: 0">Only show cities with seats</label>
-          </div>
         </div>
-        <div class="toolbar" style="margin-top: 14px">
+        <div class="toolbar">
           <button id="applyBtn" type="button">Apply Filters</button>
-          <button id="favoriteBtn" type="button" class="secondary">Save Favorite City</button>
           <button id="resetBtn" type="button" class="secondary">Reset</button>
         </div>
-      </section>
-
-      <section class="favorites">
-        <h2>Favorite Cities</h2>
-        <p class="muted">Save your most-watched city and jump back to it quickly.</p>
-        <div class="favorite-list" id="favoriteList"></div>
       </section>
 
       <section class="results">
         <h2>Latest Results</h2>
         <p class="status" id="statusText">Loading latest availability...</p>
         <div id="content"></div>
-        <div id="recommendations"></div>
       </section>
 
-      <section class="extras">
-        <div class="extras-grid">
-          <div>
-            <h3>Recent Changes</h3>
-            <p class="muted" id="changesText">Loading change summary...</p>
-            <div class="pill-row" id="changesList"></div>
-          </div>
-          <div>
-            <h3>Scan History</h3>
-            <p class="muted">Recent hourly snapshots stored by the site.</p>
-            <div class="history-list" id="historyList"></div>
-          </div>
-          <div>
-            <h3>Telegram Updates</h3>
-            <p class="muted">
-              Telegram alert support is prepared in the codebase and can be turned on once a bot
-              token and chat destination are configured.
-            </p>
-          </div>
-        </div>
+      <section class="recommendations" id="recommendSection" style="display: none">
+        <h2>Next Best Options</h2>
+        <p class="muted" id="recommendIntro"></p>
+        <div class="recommend-list" id="recommendList"></div>
       </section>
     </div>
 
     <script>
       const stateSelect = document.getElementById("stateSelect");
       const citySelect = document.getElementById("citySelect");
-      const fromDateSelect = document.getElementById("fromDateSelect");
-      const toDateSelect = document.getElementById("toDateSelect");
-      const onlyWithSeatsToggle = document.getElementById("onlyWithSeatsToggle");
-      const searchInput = document.getElementById("searchInput");
       const applyBtn = document.getElementById("applyBtn");
       const resetBtn = document.getElementById("resetBtn");
-      const favoriteBtn = document.getElementById("favoriteBtn");
-      const favoriteList = document.getElementById("favoriteList");
       const generatedAt = document.getElementById("generatedAt");
       const totalCount = document.getElementById("totalCount");
       const statusText = document.getElementById("statusText");
       const content = document.getElementById("content");
-      const recommendations = document.getElementById("recommendations");
-      const changesText = document.getElementById("changesText");
-      const changesList = document.getElementById("changesList");
-      const historyList = document.getElementById("historyList");
+      const recommendSection = document.getElementById("recommendSection");
+      const recommendIntro = document.getElementById("recommendIntro");
+      const recommendList = document.getElementById("recommendList");
 
       let summaryPayload = { states: [], cities: [] };
       let latestPayload = { rows: [] };
-      let changesPayload = { newCities: [], rows: [] };
-      let historyPayload = { items: [] };
-
-      function loadFavorites() {
-        try {
-          return JSON.parse(localStorage.getItem("spom-favorites") || "[]");
-        } catch {
-          return [];
-        }
-      }
-
-      function saveFavorites(items) {
-        localStorage.setItem("spom-favorites", JSON.stringify(items));
-      }
 
       async function init() {
-        const [summaryRes, latestRes, changesRes, historyRes] = await Promise.all([
+        const [summaryRes, latestRes] = await Promise.all([
           fetch("./data/summary.json", { cache: "no-store" }),
           fetch("./data/latest.json", { cache: "no-store" }),
-          fetch("./data/changes.json", { cache: "no-store" }),
-          fetch("./data/history.json", { cache: "no-store" }),
         ]);
 
         summaryPayload = await summaryRes.json();
         latestPayload = await latestRes.json();
-        changesPayload = await changesRes.json();
-        historyPayload = await historyRes.json();
 
         populateStates();
         populateCities();
-        populateDates();
-        renderFavorites();
-        renderHistory();
-        renderChanges();
         renderCurrentView();
       }
 
@@ -459,14 +313,11 @@
       function populateCities() {
         const selectedState = stateSelect.value;
         citySelect.innerHTML = '<option value="">All cities</option>';
+        const rows = (summaryPayload.cities || []).filter(
+          (row) => !selectedState || row.state === selectedState
+        );
 
-        const filteredCities = (summaryPayload.cities || []).filter((row) => {
-          if (selectedState && row.state !== selectedState) return false;
-          if (onlyWithSeatsToggle.checked && row.available_count === 0) return false;
-          return true;
-        });
-
-        for (const row of filteredCities) {
+        for (const row of rows) {
           const option = document.createElement("option");
           option.value = row.city;
           option.textContent =
@@ -477,64 +328,10 @@
         }
       }
 
-      function populateDates() {
-        const dateSet = new Set((latestPayload.rows || []).map((row) => row.date));
-        const sortedDates = [...dateSet].sort(compareDateLabels);
-        const options = ['<option value="">Any date</option>'].concat(
-          sortedDates.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`)
-        );
-        fromDateSelect.innerHTML = options.join("");
-        toDateSelect.innerHTML = options.join("");
-      }
-
-      function compareDateLabels(a, b) {
-        return dateLabelToComparable(a) - dateLabelToComparable(b);
-      }
-
-      function dateLabelToComparable(label) {
-        const match = /^(\d{2})-([A-Z]{3})-(\d{4})$/i.exec(label || "");
-        if (!match) return Number.MAX_SAFE_INTEGER;
-        const monthMap = {
-          JAN: 0,
-          FEB: 1,
-          MAR: 2,
-          APR: 3,
-          MAY: 4,
-          JUN: 5,
-          JUL: 6,
-          AUG: 7,
-          SEP: 8,
-          OCT: 9,
-          NOV: 10,
-          DEC: 11,
-        };
-        const [, day, month, year] = match;
-        return new Date(Number(year), monthMap[month.toUpperCase()] ?? 0, Number(day)).getTime();
-      }
-
       function renderCurrentView() {
         let rows = [...(latestPayload.rows || [])];
-        const searchText = searchInput.value.trim().toLowerCase();
-        const fromDate = fromDateSelect.value;
-        const toDate = toDateSelect.value;
-
         if (stateSelect.value) rows = rows.filter((row) => row.state === stateSelect.value);
         if (citySelect.value) rows = rows.filter((row) => row.city === citySelect.value);
-        if (searchText) {
-          rows = rows.filter((row) =>
-            [row.state, row.city, row.centre, row.date].some((value) =>
-              String(value).toLowerCase().includes(searchText)
-            )
-          );
-        }
-        if (fromDate) {
-          const fromValue = dateLabelToComparable(fromDate);
-          rows = rows.filter((row) => dateLabelToComparable(row.date) >= fromValue);
-        }
-        if (toDate) {
-          const toValue = dateLabelToComparable(toDate);
-          rows = rows.filter((row) => dateLabelToComparable(row.date) <= toValue);
-        }
 
         generatedAt.textContent = `Latest scan: ${
           latestPayload.generatedAtDisplay || latestPayload.generatedAt || "Not available"
@@ -542,7 +339,7 @@
         totalCount.textContent = `Available entries: ${rows.length}`;
         statusText.textContent =
           rows.length > 0
-            ? "Showing the most recent saved snapshot."
+            ? "Showing the latest successful snapshot."
             : "No seats are currently available for this selection in the latest hourly scan.";
 
         renderRows(rows);
@@ -550,64 +347,54 @@
       }
 
       function renderRows(rows) {
-        recommendations.innerHTML = "";
         if (!rows.length) {
           content.innerHTML =
-            '<div class="empty">No seats are available for this selection in the latest hourly scan. Try another city, remove some filters, or check again after the next refresh.</div>';
+            '<div class="empty">No seats are available for this city right now in the latest hourly scan.</div>';
           return;
         }
 
-        const changedCities = new Set(
-          (changesPayload.newCities || []).map((item) => `${item.state}||${item.city}`)
+        const sortedRows = [...rows].sort((a, b) =>
+          [a.state, a.city, a.centre, a.date].join("||").localeCompare([b.state, b.city, b.centre, b.date].join("||"))
         );
 
-        const groups = new Map();
-        for (const row of rows) {
-          const key = `${row.state}||${row.city}||${row.centre}`;
-          if (!groups.has(key)) groups.set(key, []);
-          groups.get(key).push(row);
-        }
-
-        const cards = [...groups.entries()]
-          .sort((a, b) => a[0].localeCompare(b[0]))
-          .map(([key, items]) => {
-            const [state, city, centre] = key.split("||");
-            items.sort((a, b) => compareDateLabels(a.date, b.date));
-            const isNewCity = changedCities.has(`${state}||${city}`);
-            return `
-              <article class="group-card">
-                <div class="group-top">
-                  <div>
-                    <div class="group-title">${escapeHtml(centre)}</div>
-                    <div class="group-sub">${escapeHtml(city)}, ${escapeHtml(state)}</div>
-                  </div>
-                  <div class="pill-row">
-                    ${isNewCity ? '<span class="small-chip badge-new">New in latest scan</span>' : ""}
-                    <span class="small-chip">${items.length} date option(s)</span>
-                  </div>
-                </div>
-                <div class="date-grid">
-                  ${items
-                    .map(
-                      (item) => `
-                        <div class="date-card">
-                          <div class="date-label">${escapeHtml(item.date)}</div>
-                          <div class="capacity">Capacity: ${escapeHtml(String(item.capacity))}</div>
-                        </div>
-                      `
-                    )
-                    .join("")}
-                </div>
-              </article>
-            `;
-          });
-
-        content.innerHTML = `<div class="group-list">${cards.join("")}</div>`;
+        content.innerHTML = `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>City</th>
+                  <th>Centre</th>
+                  <th>Date</th>
+                  <th>Capacity</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sortedRows
+                  .map(
+                    (row) => `
+                      <tr>
+                        <td>${escapeHtml(row.state)}</td>
+                        <td>${escapeHtml(row.city)}</td>
+                        <td>${escapeHtml(row.centre)}</td>
+                        <td>${escapeHtml(row.date)}</td>
+                        <td class="capacity">${escapeHtml(String(row.capacity))}</td>
+                      </tr>
+                    `
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
       }
 
       function renderRecommendations(rows) {
-        if (rows.length > 0 || !citySelect.value) {
-          recommendations.innerHTML = "";
+        recommendSection.style.display = "none";
+        recommendList.innerHTML = "";
+        recommendIntro.textContent = "";
+
+        if (rows.length > 0 || !stateSelect.value || !citySelect.value) {
           return;
         }
 
@@ -619,7 +406,6 @@
             item.lon != null
         );
         if (!selectedCityMeta) {
-          recommendations.innerHTML = "";
           return;
         }
 
@@ -634,31 +420,22 @@
           .slice(0, 5);
 
         if (!nearest.length) {
-          recommendations.innerHTML = "";
           return;
         }
 
-        recommendations.innerHTML = `
-          <section class="extras" style="margin-top: 18px">
-            <h3>Next Best Options Near ${escapeHtml(citySelect.value)}</h3>
-            <p class="muted">
-              Seats are not available in ${escapeHtml(citySelect.value)} right now. These are the 5 nearest tracked cities with open seats.
-            </p>
-            <div class="recommend-list">
-              ${nearest
-                .map(
-                  (item, index) => `
-                    <div class="recommend-card">
-                      <strong>#${index + 1} ${escapeHtml(item.city)}, ${escapeHtml(item.state)}</strong>
-                      <div class="muted">${Math.round(item.distanceKm)} km away</div>
-                      <div class="capacity">${escapeHtml(String(item.available_count))} open entry(s)</div>
-                    </div>
-                  `
-                )
-                .join("")}
-            </div>
-          </section>
-        `;
+        recommendSection.style.display = "block";
+        recommendIntro.textContent = `Seats are not available in ${citySelect.value} right now. These are the 5 nearest tracked cities with open seats.`;
+        recommendList.innerHTML = nearest
+          .map(
+            (item, index) => `
+              <div class="recommend-card">
+                <strong>#${index + 1} ${escapeHtml(item.city)}, ${escapeHtml(item.state)}</strong>
+                <div class="muted">${Math.round(item.distanceKm)} km away</div>
+                <div class="capacity">${escapeHtml(String(item.available_count))} open entry(s)</div>
+              </div>
+            `
+          )
+          .join("");
       }
 
       function haversineKm(lat1, lon1, lat2, lon2) {
@@ -671,65 +448,6 @@
           Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return earthKm * c;
-      }
-
-      function renderFavorites() {
-        const favorites = loadFavorites();
-        if (!favorites.length) {
-          favoriteList.innerHTML = '<span class="muted">No favorite cities saved yet.</span>';
-          return;
-        }
-        favoriteList.innerHTML = favorites
-          .map(
-            (item, index) => `
-              <button type="button" data-favorite-index="${index}">
-                ${escapeHtml(item.state)} / ${escapeHtml(item.city)}
-              </button>
-            `
-          )
-          .join("");
-      }
-
-      function renderChanges() {
-        const newCities = changesPayload.newCities || [];
-        changesText.textContent =
-          newCities.length > 0
-            ? `${newCities.length} city selection(s) changed in the latest scan.`
-            : "No new city-level openings were detected compared with the previous snapshot.";
-
-        changesList.innerHTML =
-          newCities.slice(0, 10).map(
-            (item) => `<span class="small-chip badge-new">${escapeHtml(item.state)} / ${escapeHtml(item.city)}</span>`
-          ).join("") || '<span class="muted">No new city changes right now.</span>';
-      }
-
-      function renderHistory() {
-        const items = (historyPayload.items || []).slice(-8).reverse();
-        historyList.innerHTML =
-          items
-            .map(
-              (item) => `
-                <span class="small-chip">
-                  ${escapeHtml(item.generatedAtDisplay)}: ${escapeHtml(String(item.total))}
-                </span>
-              `
-            )
-            .join("") || '<span class="muted">History will build up over time.</span>';
-      }
-
-      function saveCurrentFavorite() {
-        if (!stateSelect.value || !citySelect.value) {
-          alert("Select both a state and city before saving a favorite.");
-          return;
-        }
-        const favorites = loadFavorites();
-        const key = `${stateSelect.value}||${citySelect.value}`;
-        if (favorites.some((item) => `${item.state}||${item.city}` === key)) {
-          return;
-        }
-        favorites.push({ state: stateSelect.value, city: citySelect.value });
-        saveFavorites(favorites);
-        renderFavorites();
       }
 
       function escapeHtml(value) {
@@ -746,36 +464,11 @@
         citySelect.value = "";
       });
 
-      onlyWithSeatsToggle.addEventListener("change", () => {
-        populateCities();
-        if (citySelect.value) {
-          const valid = [...citySelect.options].some((option) => option.value === citySelect.value);
-          if (!valid) citySelect.value = "";
-        }
-      });
-
       applyBtn.addEventListener("click", renderCurrentView);
-      favoriteBtn.addEventListener("click", saveCurrentFavorite);
       resetBtn.addEventListener("click", () => {
-        searchInput.value = "";
         stateSelect.value = "";
         citySelect.value = "";
-        fromDateSelect.value = "";
-        toDateSelect.value = "";
-        onlyWithSeatsToggle.checked = true;
         populateCities();
-        renderCurrentView();
-      });
-
-      favoriteList.addEventListener("click", (event) => {
-        const button = event.target.closest("[data-favorite-index]");
-        if (!button) return;
-        const favorites = loadFavorites();
-        const item = favorites[Number(button.dataset.favoriteIndex)];
-        if (!item) return;
-        stateSelect.value = item.state;
-        populateCities();
-        citySelect.value = item.city;
         renderCurrentView();
       });
 
