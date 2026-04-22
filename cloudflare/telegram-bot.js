@@ -14,6 +14,10 @@ export default {
       dataBaseUrl: env.SPOM_DATA_BASE_URL || DEFAULT_DATA_BASE_URL,
     });
   },
+
+  async scheduled(_controller, env, ctx) {
+    ctx.waitUntil(processScheduledReminders(env));
+  },
 };
 
 async function handleTelegramWebhook(request, env) {
@@ -79,6 +83,74 @@ async function handleTelegramWebhook(request, env) {
   }
 
   return new Response("ok");
+}
+
+async function processScheduledReminders(env) {
+  if (!env.SUBSCRIPTIONS || !env.TELEGRAM_BOT_TOKEN) {
+    return;
+  }
+
+  const { latest, summary } = await fetchSeatData(env);
+  const snapshotId = latest.generatedAtIso || latest.generatedAtDisplay || latest.generatedAt || "";
+  if (!snapshotId) {
+    return;
+  }
+
+  let cursor = undefined;
+  do {
+    const page = await env.SUBSCRIPTIONS.list({ cursor, limit: 100 });
+    for (const key of page.keys || []) {
+      const record = await env.SUBSCRIPTIONS.get(key.name, "json");
+      if (!record || !Array.isArray(record.cities) || !record.cities.length) {
+        continue;
+      }
+
+      const alertState = record.alertState || {};
+      let changed = false;
+
+      for (const subscribedCity of record.cities) {
+        const matchedCityMeta = findBestCityMatch(summary, subscribedCity);
+        if (!matchedCityMeta) {
+          continue;
+        }
+
+        const cityKey = canonicalCityKey(matchedCityMeta.city, matchedCityMeta.state);
+        const matchingRows = (latest.rows || []).filter(
+          (row) => canonicalCityKey(row.city, row.state) === cityKey
+        );
+
+        if (!matchingRows.length) {
+          continue;
+        }
+
+        if (alertState[cityKey] === snapshotId) {
+          continue;
+        }
+
+        await sendTelegramMessage(
+          env,
+          record.chatId || key.name,
+          buildReminderAlertText(latest, matchedCityMeta, matchingRows)
+        );
+
+        alertState[cityKey] = snapshotId;
+        changed = true;
+      }
+
+      if (changed) {
+        await env.SUBSCRIPTIONS.put(
+          key.name,
+          JSON.stringify({
+            ...record,
+            alertState,
+            updatedAt: new Date().toISOString(),
+          })
+        );
+      }
+    }
+
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
 }
 
 async function sendCityLookup(env, chatId, rawCityName) {
@@ -185,6 +257,12 @@ async function saveReminder(env, chatId, rawCityName) {
   );
   normalizedCities.add(cityName);
 
+  const { summary } = await fetchSeatData(env);
+  const matchedCityMeta = findBestCityMatch(summary, cityName);
+  const savedCityName = matchedCityMeta ? matchedCityMeta.city : cityName;
+  normalizedCities.delete(cityName);
+  normalizedCities.add(savedCityName);
+
   await env.SUBSCRIPTIONS.put(
     reminderKey,
     JSON.stringify({
@@ -194,6 +272,7 @@ async function saveReminder(env, chatId, rawCityName) {
       username: existing.username || "",
       languageCode: existing.languageCode || "",
       cities: Array.from(normalizedCities).sort((a, b) => a.localeCompare(b)),
+      alertState: existing.alertState || {},
       createdAt: existing.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
@@ -202,7 +281,7 @@ async function saveReminder(env, chatId, rawCityName) {
   await sendTelegramMessage(
     env,
     chatId,
-    `Saved reminder for ${cityName}.\n\nUse /myreminders to see your saved cities.`
+    `Saved reminder for ${savedCityName}.\n\nUse /myreminders to see your saved cities.`
   );
 }
 
@@ -266,6 +345,7 @@ async function removeReminder(env, chatId, rawCityName) {
       username: existing.username || "",
       languageCode: existing.languageCode || "",
       cities: remaining,
+      alertState: existing.alertState || {},
       createdAt: existing.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
@@ -353,6 +433,7 @@ async function persistUserProfile(env, message) {
       username: user.username || existing.username || "",
       languageCode: user.language_code || existing.languageCode || "",
       cities: existing.cities || [],
+      alertState: existing.alertState || {},
       createdAt: existing.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       lastSeenAt: new Date().toISOString(),
@@ -420,6 +501,27 @@ function buildWelcomeText() {
     "",
     "Every city reply shows the latest batches plus the next best 5 alternatives.",
   ].join("\n");
+}
+
+function buildReminderAlertText(latest, matchedCityMeta, matchingRows) {
+  const lines = [
+    `SPOM reminder for ${matchedCityMeta.city}, ${matchedCityMeta.state}`,
+    `Latest successful scan: ${latest.generatedAtDisplay || latest.generatedAt || "Unknown"}`,
+    "",
+    "Seats are currently available:",
+    ...matchingRows
+      .slice(0, 8)
+      .map((row) => `- ${row.centre} | ${row.date} | Capacity ${row.capacity}`),
+  ];
+
+  if (matchingRows.length > 8) {
+    lines.push("");
+    lines.push(`Showing first 8 entries out of ${matchingRows.length}.`);
+  }
+
+  lines.push("");
+  lines.push("Use /stop CityName if you no longer want reminders for this city.");
+  return lines.join("\n");
 }
 
 function haversineKm(lat1, lon1, lat2, lon2) {
