@@ -36,7 +36,7 @@
 
       .hero,
       .filters,
-      .results,
+      .summary,
       .recommendations {
         margin-top: 22px;
         background: var(--panel);
@@ -163,7 +163,7 @@
       }
 
       .status {
-        margin: 0 0 16px;
+        margin: 0;
         color: var(--muted);
       }
 
@@ -174,39 +174,49 @@
         color: var(--muted);
       }
 
-      .desktop-table {
-        display: block;
-      }
-
-      .mobile-cards {
-        display: none;
-      }
-
-      .table-wrap {
-        overflow-x: auto;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      th,
-      td {
-        text-align: left;
-        padding: 12px 10px;
-        border-bottom: 1px solid var(--line);
-        white-space: nowrap;
-      }
-
-      th {
-        color: var(--muted);
-        font-weight: 600;
-      }
-
       .capacity {
         color: var(--good);
         font-weight: 700;
+      }
+
+      .warn {
+        color: #8c4a18;
+        font-weight: 600;
+      }
+
+      .summary-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        margin-top: 18px;
+      }
+
+      .summary-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fffdf8;
+        padding: 16px;
+      }
+
+      .summary-label {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      .summary-value {
+        margin-top: 6px;
+        font-size: 1.35rem;
+        font-weight: 700;
+      }
+
+      .summary-list {
+        margin: 18px 0 0;
+        padding-left: 18px;
+        color: var(--ink);
+      }
+
+      .summary-list li + li {
+        margin-top: 8px;
       }
 
       .recommend-list {
@@ -225,33 +235,6 @@
         color: var(--muted);
       }
 
-      .result-card {
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 14px;
-        background: #fffdf8;
-        margin-bottom: 12px;
-      }
-
-      .result-centre {
-        font-weight: 700;
-        font-size: 1rem;
-      }
-
-      .result-meta {
-        margin-top: 4px;
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-
-      .result-date {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        align-items: center;
-      }
-
       @media (max-width: 640px) {
         .wrap {
           padding-top: 18px;
@@ -259,18 +242,10 @@
 
         .hero,
         .filters,
-        .results,
+        .summary,
         .recommendations {
           border-radius: 18px;
           padding: 18px;
-        }
-
-        .desktop-table {
-          display: none;
-        }
-
-        .mobile-cards {
-          display: block;
         }
       }
     </style>
@@ -286,13 +261,13 @@
         </p>
         <div class="meta">
           <div class="chip" id="generatedAt">Last successful scan: loading...</div>
-          <div class="chip" id="totalCount">Available entries: ...</div>
+          <div class="chip" id="freshnessChip">Checking freshness...</div>
           <div class="chip">Hourly checks are attempted</div>
         </div>
         <p class="note">
           Select a state and city to check availability. The timestamp shows the last successful
-          scan, and the site attempts to check for updates every hour. The 5 best alternatives are
-          shown for the selected city.
+          scan. If the scraper fails on GitHub’s hourly run, the site keeps showing the last good
+          snapshot until the next successful scan.
         </p>
       </section>
 
@@ -330,8 +305,8 @@
         </p>
       </section>
 
-      <section class="results">
-        <h2>Latest Results</h2>
+      <section class="summary">
+        <h2>City Snapshot</h2>
         <p class="status" id="statusText">Loading latest availability...</p>
         <div id="content"></div>
       </section>
@@ -351,7 +326,7 @@
       const telegramBtn = document.getElementById("telegramBtn");
       const telegramNote = document.getElementById("telegramNote");
       const generatedAt = document.getElementById("generatedAt");
-      const totalCount = document.getElementById("totalCount");
+      const freshnessChip = document.getElementById("freshnessChip");
       const statusText = document.getElementById("statusText");
       const content = document.getElementById("content");
       const recommendSection = document.getElementById("recommendSection");
@@ -417,15 +392,40 @@
         generatedAt.textContent = `Last successful scan: ${
           latestPayload.generatedAtDisplay || latestPayload.generatedAt || "Not available"
         }`;
-        totalCount.textContent = `Available entries: ${rows.length}`;
+        freshnessChip.textContent = buildFreshnessText();
         statusText.textContent =
           rows.length > 0
-            ? "Showing the latest successful snapshot."
-            : "No seats are currently available for this selection in the latest hourly scan.";
+            ? "Showing a compact snapshot for the selected city."
+            : "No seats are currently available for this selection in the latest successful scan.";
 
-        renderRows(rows);
+        renderSummary(rows);
         renderRecommendations(rows);
         updateTelegramCta();
+      }
+
+      function buildFreshnessText() {
+        const generatedAtIso = latestPayload.generatedAtIso;
+        if (!generatedAtIso) {
+          return "Freshness unavailable";
+        }
+
+        const now = new Date();
+        const scanTime = new Date(generatedAtIso);
+        const ageHours = (now - scanTime) / (1000 * 60 * 60);
+
+        if (!Number.isFinite(ageHours)) {
+          return "Freshness unavailable";
+        }
+
+        if (ageHours < 2) {
+          return "Fresh within 2 hours";
+        }
+
+        if (ageHours < 6) {
+          return `About ${Math.round(ageHours)} hours old`;
+        }
+
+        return `Stale snapshot: about ${Math.round(ageHours)} hours old`;
       }
 
       function updateTelegramCta(feedbackText = "") {
@@ -445,10 +445,19 @@
           : "Open the Telegram bot for quick help and reminder commands. If you choose a city here, the site will copy that city name before opening Telegram so it is easier to send.";
       }
 
-      function renderRows(rows) {
+      function renderSummary(rows) {
+        const selectedState = stateSelect.value;
+        const selectedCity = citySelect.value;
+
+        if (!selectedState || !selectedCity) {
+          content.innerHTML =
+            '<div class="empty">Choose a state and city to see a short availability snapshot instead of a long raw seat list.</div>';
+          return;
+        }
+
         if (!rows.length) {
           content.innerHTML =
-            '<div class="empty">No seats are available for this city right now in the latest hourly scan.</div>';
+            '<div class="empty">No seats are available for this city right now in the latest successful scan.</div>';
           return;
         }
 
@@ -456,53 +465,42 @@
           [a.state, a.city, a.centre, a.date].join("||").localeCompare([b.state, b.city, b.centre, b.date].join("||"))
         );
 
+        const centres = [...new Set(sortedRows.map((row) => row.centre))];
+        const dates = [...new Set(sortedRows.map((row) => row.date))];
+        const maxCapacity = Math.max(...sortedRows.map((row) => Number(row.capacity) || 0));
+
         content.innerHTML = `
-          <div class="desktop-table">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>State</th>
-                    <th>City</th>
-                    <th>Centre</th>
-                    <th>Date</th>
-                    <th>Capacity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${sortedRows
-                    .map(
-                      (row) => `
-                        <tr>
-                          <td>${escapeHtml(row.state)}</td>
-                          <td>${escapeHtml(row.city)}</td>
-                          <td>${escapeHtml(row.centre)}</td>
-                          <td>${escapeHtml(row.date)}</td>
-                          <td class="capacity">${escapeHtml(String(row.capacity))}</td>
-                        </tr>
-                      `
-                    )
-                    .join("")}
-                </tbody>
-              </table>
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-label">City</div>
+              <div class="summary-value">${escapeHtml(selectedCity)}, ${escapeHtml(selectedState)}</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">Open entries</div>
+              <div class="summary-value capacity">${escapeHtml(String(sortedRows.length))}</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">Active centres</div>
+              <div class="summary-value">${escapeHtml(String(centres.length))}</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">Best capacity seen</div>
+              <div class="summary-value">${escapeHtml(String(maxCapacity))}</div>
             </div>
           </div>
-          <div class="mobile-cards">
-            ${sortedRows
-              .map(
-                (row) => `
-                  <article class="result-card">
-                    <div class="result-centre">${escapeHtml(row.centre)}</div>
-                    <div class="result-meta">${escapeHtml(row.city)}, ${escapeHtml(row.state)}</div>
-                    <div class="result-date">
-                      <span>${escapeHtml(row.date)}</span>
-                      <span class="capacity">${escapeHtml(String(row.capacity))}</span>
-                    </div>
-                  </article>
-                `
-              )
-              .join("")}
-          </div>
+          <ul class="summary-list">
+            <li><strong>Upcoming dates:</strong> ${dates.slice(0, 6).map(escapeHtml).join(", ")}</li>
+            <li><strong>Centres with seats:</strong> ${centres.slice(0, 4).map(escapeHtml).join(", ")}${
+              centres.length > 4 ? ", and more" : ""
+            }</li>
+            <li><strong>Data note:</strong> ${
+              freshnessChip.textContent.startsWith("Stale")
+                ? `<span class="warn">${escapeHtml(
+                    "The latest good scan is old because recent hourly checks likely failed on GitHub."
+                  )}</span>`
+                : escapeHtml("This city snapshot is based on the latest successful public scan.")
+            }</li>
+          </ul>
         `;
       }
 
