@@ -27,6 +27,8 @@ async function handleTelegramWebhook(request, env) {
   }
 
   try {
+    await persistUserProfile(env, message);
+
     if (!text || text.startsWith("/start")) {
       await sendTelegramMessage(env, chatId, buildWelcomeText());
       return new Response("ok");
@@ -181,7 +183,13 @@ async function saveReminder(env, chatId, rawCityName) {
   await env.SUBSCRIPTIONS.put(
     reminderKey,
     JSON.stringify({
+      chatId,
+      firstName: existing.firstName || "",
+      lastName: existing.lastName || "",
+      username: existing.username || "",
+      languageCode: existing.languageCode || "",
       cities: Array.from(normalizedCities).sort((a, b) => a.localeCompare(b)),
+      createdAt: existing.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
   );
@@ -247,7 +255,13 @@ async function removeReminder(env, chatId, rawCityName) {
   await env.SUBSCRIPTIONS.put(
     reminderKey,
     JSON.stringify({
+      chatId,
+      firstName: existing.firstName || "",
+      lastName: existing.lastName || "",
+      username: existing.username || "",
+      languageCode: existing.languageCode || "",
       cities: remaining,
+      createdAt: existing.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
   );
@@ -314,6 +328,31 @@ function formatAlternatives(alternatives) {
 
 function normalizeCityName(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+async function persistUserProfile(env, message) {
+  if (!env.SUBSCRIPTIONS || !message?.chat?.id) {
+    return;
+  }
+
+  const chatId = String(message.chat.id);
+  const existing = (await env.SUBSCRIPTIONS.get(chatId, "json")) || {};
+  const user = message.from || {};
+
+  await env.SUBSCRIPTIONS.put(
+    chatId,
+    JSON.stringify({
+      chatId: message.chat.id,
+      firstName: user.first_name || existing.firstName || "",
+      lastName: user.last_name || existing.lastName || "",
+      username: user.username || existing.username || "",
+      languageCode: user.language_code || existing.languageCode || "",
+      cities: existing.cities || [],
+      createdAt: existing.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      lastSeenAt: new Date().toISOString(),
+    })
+  );
 }
 
 function findBestCityMatch(summary, userInput) {
