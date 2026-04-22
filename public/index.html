@@ -149,6 +149,14 @@
         color: var(--muted);
       }
 
+      .desktop-table {
+        display: block;
+      }
+
+      .mobile-cards {
+        display: none;
+      }
+
       .table-wrap {
         overflow-x: auto;
       }
@@ -192,6 +200,33 @@
         color: var(--muted);
       }
 
+      .result-card {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fffdf8;
+        margin-bottom: 12px;
+      }
+
+      .result-centre {
+        font-weight: 700;
+        font-size: 1rem;
+      }
+
+      .result-meta {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .result-date {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+      }
+
       @media (max-width: 640px) {
         .wrap {
           padding-top: 18px;
@@ -205,9 +240,12 @@
           padding: 18px;
         }
 
-        th,
-        td {
-          white-space: normal;
+        .desktop-table {
+          display: none;
+        }
+
+        .mobile-cards {
+          display: block;
         }
       }
     </style>
@@ -222,13 +260,14 @@
           open seats.
         </p>
         <div class="meta">
-          <div class="chip" id="generatedAt">Latest scan: loading...</div>
+          <div class="chip" id="generatedAt">Last successful scan: loading...</div>
           <div class="chip" id="totalCount">Available entries: ...</div>
-          <div class="chip">Seats are refreshed hourly</div>
+          <div class="chip">Hourly checks are attempted</div>
         </div>
         <p class="note">
-          Select a state and city to check availability. If no seats are open in that city, the
-          site will suggest the 5 nearest tracked cities with seats.
+          Select a state and city to check availability. The timestamp shows the last successful
+          scan, and the site attempts to check for updates every hour. The 5 best alternatives are
+          shown for the selected city.
         </p>
       </section>
 
@@ -333,7 +372,7 @@
         if (stateSelect.value) rows = rows.filter((row) => row.state === stateSelect.value);
         if (citySelect.value) rows = rows.filter((row) => row.city === citySelect.value);
 
-        generatedAt.textContent = `Latest scan: ${
+        generatedAt.textContent = `Last successful scan: ${
           latestPayload.generatedAtDisplay || latestPayload.generatedAt || "Not available"
         }`;
         totalCount.textContent = `Available entries: ${rows.length}`;
@@ -358,33 +397,51 @@
         );
 
         content.innerHTML = `
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>State</th>
-                  <th>City</th>
-                  <th>Centre</th>
-                  <th>Date</th>
-                  <th>Capacity</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${sortedRows
-                  .map(
-                    (row) => `
-                      <tr>
-                        <td>${escapeHtml(row.state)}</td>
-                        <td>${escapeHtml(row.city)}</td>
-                        <td>${escapeHtml(row.centre)}</td>
-                        <td>${escapeHtml(row.date)}</td>
-                        <td class="capacity">${escapeHtml(String(row.capacity))}</td>
-                      </tr>
-                    `
-                  )
-                  .join("")}
-              </tbody>
-            </table>
+          <div class="desktop-table">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Centre</th>
+                    <th>Date</th>
+                    <th>Capacity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${sortedRows
+                    .map(
+                      (row) => `
+                        <tr>
+                          <td>${escapeHtml(row.state)}</td>
+                          <td>${escapeHtml(row.city)}</td>
+                          <td>${escapeHtml(row.centre)}</td>
+                          <td>${escapeHtml(row.date)}</td>
+                          <td class="capacity">${escapeHtml(String(row.capacity))}</td>
+                        </tr>
+                      `
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="mobile-cards">
+            ${sortedRows
+              .map(
+                (row) => `
+                  <article class="result-card">
+                    <div class="result-centre">${escapeHtml(row.centre)}</div>
+                    <div class="result-meta">${escapeHtml(row.city)}, ${escapeHtml(row.state)}</div>
+                    <div class="result-date">
+                      <span>${escapeHtml(row.date)}</span>
+                      <span class="capacity">${escapeHtml(String(row.capacity))}</span>
+                    </div>
+                  </article>
+                `
+              )
+              .join("")}
           </div>
         `;
       }
@@ -394,7 +451,7 @@
         recommendList.innerHTML = "";
         recommendIntro.textContent = "";
 
-        if (rows.length > 0 || !stateSelect.value || !citySelect.value) {
+        if (!stateSelect.value || !citySelect.value) {
           return;
         }
 
@@ -424,13 +481,15 @@
         }
 
         recommendSection.style.display = "block";
-        recommendIntro.textContent = `Seats are not available in ${citySelect.value} right now. These are the 5 nearest tracked cities with open seats.`;
+        recommendIntro.textContent =
+          rows.length > 0
+            ? `These are the 5 best alternative tracked cities for ${citySelect.value}.`
+            : `Seats are not available in ${citySelect.value} right now. These are the 5 best alternative tracked cities.`;
         recommendList.innerHTML = nearest
           .map(
             (item, index) => `
               <div class="recommend-card">
                 <strong>#${index + 1} ${escapeHtml(item.city)}, ${escapeHtml(item.state)}</strong>
-                <div class="muted">${Math.round(item.distanceKm)} km away</div>
                 <div class="capacity">${escapeHtml(String(item.available_count))} open entry(s)</div>
               </div>
             `
