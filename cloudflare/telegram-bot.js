@@ -51,6 +51,11 @@ async function handleTelegramWebhook(request, env) {
       return new Response("ok");
     }
 
+    if (text === "/remind") {
+      await sendTelegramMessage(env, chatId, "Use /remind CityName. Example: /remind Pune");
+      return new Response("ok");
+    }
+
     if (text === "/myreminders") {
       await listReminders(env, chatId);
       return new Response("ok");
@@ -406,15 +411,14 @@ function buildWelcomeText() {
   return [
     "Welcome to the SPOM Seat Checker bot.",
     "",
-    "How to use this bot:",
-    "- Send any city name directly, like Mumbai or Jaipur.",
-    "- Use /city CityName if you want an explicit command format.",
-    "- Use /remind CityName to save a reminder city once reminder storage is connected.",
-    "- Use /myreminders to view saved reminder cities.",
-    "- Use /stop CityName to remove a saved reminder city.",
-    "- Use /help any time to see this guide again.",
+    "How to use:",
+    "1. Send any city name like Mumbai, Jaipur, or Pune.",
+    "2. Use /remind CityName to save a reminder city.",
+    "3. Use /myreminders to see your saved cities.",
+    "4. Use /stop CityName to remove a saved city.",
+    "5. Use /help to open this guide again.",
     "",
-    "Every city reply includes the latest batches plus the next best 5 alternatives.",
+    "Every city reply shows the latest batches plus the next best 5 alternatives.",
   ].join("\n");
 }
 
