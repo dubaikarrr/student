@@ -86,21 +86,38 @@ async function sendCityLookup(env, chatId, rawCityName) {
   }
 
   const { latest, summary } = await fetchSeatData(env);
+  const matchedCityMeta = findBestCityMatch(summary, cityName);
+
+  if (!matchedCityMeta) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      `I could not recognise "${rawCityName}". Try a city like Mumbai, Jaipur, Pune, or type "/help" to see commands.`
+    );
+    return;
+  }
+
   const matchingRows = (latest.rows || []).filter(
-    (row) => String(row.city).toLowerCase() === cityName.toLowerCase()
+    (row) =>
+      canonicalCityKey(row.city, row.state) ===
+      canonicalCityKey(matchedCityMeta.city, matchedCityMeta.state)
   );
 
-  const alternatives = getBestAlternatives(summary, cityName).slice(0, 5);
+  const alternatives = getBestAlternatives(
+    summary,
+    matchedCityMeta.city,
+    matchedCityMeta.state
+  ).slice(0, 5);
 
   if (!matchingRows.length) {
     const lines = [
-      `No open SPOM seats found for ${cityName} in the latest successful scan.`,
+      `No open SPOM seats found for ${matchedCityMeta.city}, ${matchedCityMeta.state} in the latest successful scan.`,
       `Last successful scan: ${latest.generatedAtDisplay || latest.generatedAt || "Unknown"}`,
       "",
       "Next best 5 options:",
       ...formatAlternatives(alternatives),
       "",
-      `To save this city for future Telegram reminders, use: /remind ${cityName}`,
+      `To save this city for future Telegram reminders, use: /remind ${matchedCityMeta.city}`,
     ];
 
     await sendTelegramMessage(env, chatId, lines.join("\n"));
@@ -108,11 +125,13 @@ async function sendCityLookup(env, chatId, rawCityName) {
   }
 
   const citySummary = (summary.cities || []).find(
-    (item) => String(item.city).toLowerCase() === cityName.toLowerCase()
+    (item) =>
+      canonicalCityKey(item.city, item.state) ===
+      canonicalCityKey(matchedCityMeta.city, matchedCityMeta.state)
   );
 
   const lines = [
-    `SPOM seats for ${cityName}`,
+    `SPOM seats for ${matchedCityMeta.city}, ${matchedCityMeta.state}`,
     `Last successful scan: ${latest.generatedAtDisplay || latest.generatedAt || "Unknown"}`,
     `Open entries: ${citySummary?.available_count ?? matchingRows.length}`,
     "",
@@ -131,7 +150,7 @@ async function sendCityLookup(env, chatId, rawCityName) {
   lines.push("Next best 5 options:");
   lines.push(...formatAlternatives(alternatives));
   lines.push("");
-  lines.push(`To save this city for future Telegram reminders, use: /remind ${cityName}`);
+  lines.push(`To save this city for future Telegram reminders, use: /remind ${matchedCityMeta.city}`);
 
   await sendTelegramMessage(env, chatId, lines.join("\n"));
 }
@@ -256,22 +275,26 @@ async function fetchSeatData(env) {
   return { latest, summary };
 }
 
-function getBestAlternatives(summary, cityName) {
+function getBestAlternatives(summary, cityName, stateName = "") {
   const cities = summary.cities || [];
   const selected = cities.find(
-    (item) => String(item.city).toLowerCase() === cityName.toLowerCase()
+    (item) => canonicalCityKey(item.city, item.state) === canonicalCityKey(cityName, stateName)
   );
 
   const available = cities.filter((item) => Number(item.available_count || 0) > 0);
 
   if (!selected || selected.lat == null || selected.lon == null) {
     return available
-      .filter((item) => String(item.city).toLowerCase() !== cityName.toLowerCase())
+      .filter(
+        (item) => canonicalCityKey(item.city, item.state) !== canonicalCityKey(cityName, stateName)
+      )
       .sort((a, b) => Number(b.available_count || 0) - Number(a.available_count || 0));
   }
 
   return available
-    .filter((item) => String(item.city).toLowerCase() !== cityName.toLowerCase())
+    .filter(
+      (item) => canonicalCityKey(item.city, item.state) !== canonicalCityKey(cityName, stateName)
+    )
     .map((item) => ({
       ...item,
       distanceScore: haversineKm(selected.lat, selected.lon, item.lat, item.lon),
@@ -291,6 +314,53 @@ function formatAlternatives(alternatives) {
 
 function normalizeCityName(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function findBestCityMatch(summary, userInput) {
+  const cities = summary.cities || [];
+  const normalizedInput = normalizeLookupKey(userInput);
+  if (!normalizedInput) {
+    return null;
+  }
+
+  const exactMatch = cities.find(
+    (item) => canonicalCityKey(item.city, item.state) === normalizedInput
+  );
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  const cityOnlyMatch = cities.find((item) => normalizeLookupKey(item.city) === normalizedInput);
+  if (cityOnlyMatch) {
+    return cityOnlyMatch;
+  }
+
+  const stateAwareMatch = cities.find((item) => {
+    const cityKey = normalizeLookupKey(item.city);
+    const stateKey = normalizeLookupKey(item.state);
+    return (
+      normalizedInput === `${cityKey} ${stateKey}` ||
+      normalizedInput === `${stateKey} ${cityKey}` ||
+      normalizedInput.includes(cityKey)
+    );
+  });
+  if (stateAwareMatch) {
+    return stateAwareMatch;
+  }
+
+  return null;
+}
+
+function canonicalCityKey(city, state = "") {
+  return normalizeLookupKey(`${city || ""} ${state || ""}`);
+}
+
+function normalizeLookupKey(value) {
+  return normalizeCityName(value)
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function buildWelcomeText() {
