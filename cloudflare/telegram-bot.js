@@ -1,10 +1,25 @@
 const DEFAULT_DATA_BASE_URL = "https://dubaikarrr.github.io/student/data";
 const BOT_USERNAME = "SPOM_Seat_Checker_bot";
+const BASE_URL = "https://spmt.icai.org/ICAI";
+const SLOT_PAGE_URL = `${BASE_URL}/LoginAction_showSlotDetails.action`;
+const USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+  "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders() });
+    }
+
     if (request.method === "POST") {
       return handleTelegramWebhook(request, env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/live-check") {
+      return handleLiveCheck(request, env);
     }
 
     return jsonResponse({
@@ -19,6 +34,64 @@ export default {
     ctx.waitUntil(processScheduledReminders(env));
   },
 };
+
+async function handleLiveCheck(request, env) {
+  const url = new URL(request.url);
+  const state = normalizeCityName(url.searchParams.get("state"));
+  const city = normalizeCityName(url.searchParams.get("city"));
+
+  if (!city) {
+    return jsonResponse(
+      { ok: false, error: "Missing city. Pass ?city=CityName and optionally ?state=StateName." },
+      400
+    );
+  }
+
+  try {
+    const { summary } = await fetchSeatData(env);
+    const matchedCityMeta = findBestCityMatch(summary, state ? `${city} ${state}` : city);
+    if (!matchedCityMeta) {
+      return jsonResponse(
+        {
+          ok: false,
+          error: `City "${city}" was not recognised in the tracked catalog.`,
+        },
+        404
+      );
+    }
+
+    const liveRows = await fetchLiveCityAvailability(matchedCityMeta.state, matchedCityMeta.city);
+    const alternatives = getBestAlternatives(
+      summary,
+      matchedCityMeta.city,
+      matchedCityMeta.state
+    ).slice(0, 5);
+
+    return jsonResponse({
+      ok: true,
+      mode: "live",
+      generatedAtIso: new Date().toISOString(),
+      generatedAtDisplay: new Date().toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone: "Asia/Kolkata",
+      }),
+      state: matchedCityMeta.state,
+      city: matchedCityMeta.city,
+      total: liveRows.length,
+      rows: liveRows,
+      alternatives,
+    });
+  } catch (error) {
+    return jsonResponse(
+      {
+        ok: false,
+        error: String(error?.message || error),
+      },
+      500
+    );
+  }
+}
 
 async function handleTelegramWebhook(request, env) {
   const body = await request.json();
@@ -176,11 +249,24 @@ async function sendCityLookup(env, chatId, rawCityName) {
     return;
   }
 
-  const matchingRows = (latest.rows || []).filter(
-    (row) =>
-      canonicalCityKey(row.city, row.state) ===
-      canonicalCityKey(matchedCityMeta.city, matchedCityMeta.state)
-  );
+  let matchingRows = [];
+  let resultLabel = "Live check";
+  let resultTimestamp = new Date().toLocaleString("en-IN", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "Asia/Kolkata",
+  });
+  try {
+    matchingRows = await fetchLiveCityAvailability(matchedCityMeta.state, matchedCityMeta.city);
+  } catch (error) {
+    matchingRows = (latest.rows || []).filter(
+      (row) =>
+        canonicalCityKey(row.city, row.state) ===
+        canonicalCityKey(matchedCityMeta.city, matchedCityMeta.state)
+    );
+    resultLabel = "Latest saved scan";
+    resultTimestamp = latest.generatedAtDisplay || latest.generatedAt || "Unknown";
+  }
 
   const alternatives = getBestAlternatives(
     summary,
@@ -190,8 +276,8 @@ async function sendCityLookup(env, chatId, rawCityName) {
 
   if (!matchingRows.length) {
     const lines = [
-      `No open SPOM seats found for ${matchedCityMeta.city}, ${matchedCityMeta.state} in the latest successful scan.`,
-      `Last successful scan: ${latest.generatedAtDisplay || latest.generatedAt || "Unknown"}`,
+      `No open SPOM seats found for ${matchedCityMeta.city}, ${matchedCityMeta.state}.`,
+      `${resultLabel}: ${resultTimestamp}`,
       "",
       "Next best 5 options:",
       ...formatAlternatives(alternatives),
@@ -211,7 +297,7 @@ async function sendCityLookup(env, chatId, rawCityName) {
 
   const lines = [
     `SPOM seats for ${matchedCityMeta.city}, ${matchedCityMeta.state}`,
-    `Last successful scan: ${latest.generatedAtDisplay || latest.generatedAt || "Unknown"}`,
+    `${resultLabel}: ${resultTimestamp}`,
     `Open entries: ${citySummary?.available_count ?? matchingRows.length}`,
     "",
     "Current batches:",
@@ -374,6 +460,44 @@ async function fetchSeatData(env) {
   return { latest, summary };
 }
 
+async function fetchLiveCityAvailability(stateName, cityName) {
+  const client = new LiveSpomClient();
+  const states = await client.fetchStates();
+  const matchedState = states.find(
+    (item) => normalizeLookupKey(item.label) === normalizeLookupKey(stateName)
+  );
+  if (!matchedState) {
+    throw new Error(`State "${stateName}" was not found on ICAI.`);
+  }
+
+  const cities = await client.fetchCities(matchedState.key);
+  const matchedCity = cities.find(
+    (item) => normalizeLookupKey(item.label) === normalizeLookupKey(cityName)
+  );
+  if (!matchedCity) {
+    throw new Error(`City "${cityName}" was not found on ICAI for ${stateName}.`);
+  }
+
+  const centres = await client.fetchCentres(matchedCity.key);
+  const rows = [];
+  for (const centre of centres) {
+    const availability = await client.fetchCentreAvailability(centre.key);
+    for (const slot of availability) {
+      rows.push({
+        state: stateName,
+        city: cityName,
+        centre: centre.label,
+        date: slot.date,
+        capacity: slot.capacity,
+      });
+    }
+  }
+
+  return rows.sort((a, b) =>
+    [a.state, a.city, a.centre, a.date].join("||").localeCompare([b.state, b.city, b.centre, b.date].join("||"))
+  );
+}
+
 function getBestAlternatives(summary, cityName, stateName = "") {
   const cities = summary.cities || [];
   const selected = cities.find(
@@ -524,6 +648,162 @@ function buildReminderAlertText(latest, matchedCityMeta, matchingRows) {
   return lines.join("\n");
 }
 
+class LiveSpomClient {
+  constructor() {
+    this.cookies = "";
+  }
+
+  async bootstrap() {
+    const response = await this.requestText(SLOT_PAGE_URL);
+    const setCookie = response.headers.get("set-cookie");
+    if (setCookie) {
+      this.cookies = setCookie
+        .split(/,(?=[^;]+=[^;]+)/)
+        .map((part) => part.split(";", 1)[0].trim())
+        .join("; ");
+    }
+    return response.text;
+  }
+
+  async fetchStates() {
+    const page = await this.bootstrap();
+    return extractSelectOptions(page, "cmbStateList");
+  }
+
+  async fetchCities(stateKey) {
+    const payload = await this.fetchAjaxText(
+      `${BASE_URL}/LoginAction_getCityForTestCenters.action?statePk=${encodeURIComponent(stateKey)}`
+    );
+    return parseDelimitedOptions(payload);
+  }
+
+  async fetchCentres(cityKey) {
+    const payload = await this.fetchAjaxText(
+      `${BASE_URL}/LoginAction_getTestCentreForCity.action?selectedCity=${encodeURIComponent(cityKey)}`
+    );
+    return parseDelimitedOptions(payload);
+  }
+
+  async fetchCentreAvailability(centreKey) {
+    const payload = await this.fetchAjaxText(
+      `${BASE_URL}/LoginAction_getTestCenterAddress.action?cmbTstCenter=${encodeURIComponent(centreKey)}`
+    );
+    const trimmed = payload.trim();
+    if (!trimmed) {
+      return [];
+    }
+
+    const parts = trimmed.split("##");
+    if (parts.length < 2) {
+      return [];
+    }
+
+    const rawDates = parts[1];
+    if (rawDates.includes("NoDatesAvlMsg")) {
+      return [];
+    }
+
+    return rawDates
+      .split(",")
+      .map((entry) => entry.trim())
+      .filter((entry) => entry.includes("&&"))
+      .map((entry) => {
+        const [date, capacityText] = entry.split("&&");
+        return {
+          date: date.trim(),
+          capacity: Number.parseInt(capacityText, 10),
+        };
+      })
+      .filter((entry) => Number.isFinite(entry.capacity) && entry.capacity > 0);
+  }
+
+  async fetchAjaxText(url) {
+    const response = await this.requestText(url, {
+      "X-Requested-With": "XMLHttpRequest",
+      Referer: SLOT_PAGE_URL,
+      Origin: "https://spmt.icai.org",
+      Cookie: this.cookies,
+    });
+    return response.text;
+  }
+
+  async requestText(url, extraHeaders = {}) {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": USER_AGENT,
+        Accept: "*/*",
+        ...extraHeaders,
+      },
+      redirect: "manual",
+    });
+
+    if (response.status >= 300 && response.status < 400) {
+      const location = response.headers.get("location");
+      throw new Error(`ICAI redirected request to ${location || "an unknown location"}`);
+    }
+
+    const text = await response.text();
+    if (!response.ok) {
+      throw new Error(`ICAI request failed with status ${response.status}`);
+    }
+
+    return { text, headers: response.headers };
+  }
+}
+
+function parseDelimitedOptions(payload) {
+  return payload
+    .trim()
+    .split("##")
+    .map((entry) => entry.trim())
+    .filter((entry) => entry.includes("$$"))
+    .map((entry) => {
+      const [key, label] = entry.split("$$");
+      return {
+        key: key.trim(),
+        label: label.trim(),
+      };
+    })
+    .filter((entry) => entry.key && entry.key !== "-1" && entry.label);
+}
+
+function extractSelectOptions(html, selectId) {
+  const selectPattern = new RegExp(
+    `<select[^>]*id="${escapeRegex(selectId)}"[^>]*>([\\s\\S]*?)</select>`,
+    "i"
+  );
+  const match = html.match(selectPattern);
+  if (!match) {
+    return [];
+  }
+
+  const optionPattern = /<option\s+value="([^"]*)"(?:[^>]*)>([\s\S]*?)<\/option>/gi;
+  const options = [];
+  let optionMatch;
+  while ((optionMatch = optionPattern.exec(match[1])) !== null) {
+    const key = decodeHtml(optionMatch[1]).trim();
+    const label = decodeHtml(optionMatch[2]).replace(/\s+/g, " ").trim();
+    if (key && key !== "-1" && label) {
+      options.push({ key, label });
+    }
+  }
+
+  return options;
+}
+
+function decodeHtml(value) {
+  return value
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function haversineKm(lat1, lon1, lat2, lon2) {
   const toRad = (value) => (value * Math.PI) / 180;
   const earthKm = 6371;
@@ -562,6 +842,15 @@ function jsonResponse(payload, status = 200) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "cache-control": "no-store",
+      ...corsHeaders(),
     },
   });
+}
+
+function corsHeaders() {
+  return {
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "GET,POST,OPTIONS",
+    "access-control-allow-headers": "content-type",
+  };
 }

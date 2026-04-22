@@ -232,6 +232,10 @@
         flex: 1 1 180px;
       }
 
+      .toolbar button.live-btn {
+        background: #245c4f;
+      }
+
       .telegram-link {
         display: inline-flex;
         align-items: center;
@@ -431,13 +435,13 @@
               >
             </div>
             <div class="meta">
-              <div class="chip" id="generatedAt">Last successful scan: loading...</div>
-              <div class="chip" id="freshnessChip">Checking freshness...</div>
-              <div class="chip">Hourly checks are attempted</div>
+              <div class="chip" id="generatedAt">Latest data: loading...</div>
+              <div class="chip" id="freshnessChip">Checking status...</div>
+              <div class="chip">Use Check Live for the freshest city result</div>
             </div>
             <p class="note">
-              The first Shricasa tool is the SPOM Seat Checker below. Popular cities are checked
-              more frequently, while the wider city list is refreshed a few times through the day.
+              The first Shricasa tool is the SPOM Seat Checker below. Use the live check button
+              after choosing a state and city to fetch the freshest available result for that city.
             </p>
           </div>
           <aside class="hero-panel">
@@ -548,9 +552,13 @@
       const recommendSection = document.getElementById("recommendSection");
       const recommendIntro = document.getElementById("recommendIntro");
       const recommendList = document.getElementById("recommendList");
+      const LIVE_API_URL = "https://spom-telegram-bot.business-shivam-tathe.workers.dev/api/live-check";
 
       let summaryPayload = { states: [], cities: [] };
       let latestPayload = { rows: [] };
+      let activeRows = [];
+      let lastLiveMeta = null;
+      let liveAlternatives = [];
 
       async function init() {
         const [summaryRes, latestRes] = await Promise.all([
@@ -564,6 +572,7 @@
         populateStates();
         populateCities();
         updateTelegramCta();
+        activeRows = [...(latestPayload.rows || [])];
         renderCurrentView();
       }
 
@@ -601,17 +610,24 @@
       }
 
       function renderCurrentView() {
-        let rows = [...(latestPayload.rows || [])];
+        let rows = [...activeRows];
         if (stateSelect.value) rows = rows.filter((row) => row.state === stateSelect.value);
         if (citySelect.value) rows = rows.filter((row) => row.city === citySelect.value);
 
-        generatedAt.textContent = `Last successful scan: ${
-          latestPayload.generatedAtDisplay || latestPayload.generatedAt || "Not available"
-        }`;
-        freshnessChip.textContent = buildFreshnessText();
+        if (lastLiveMeta) {
+          generatedAt.textContent = `Last live check: ${lastLiveMeta.generatedAtDisplay || "Just now"}`;
+          freshnessChip.textContent = "Live result";
+        } else {
+          generatedAt.textContent = `Latest saved scan: ${
+            latestPayload.generatedAtDisplay || latestPayload.generatedAt || "Not available"
+          }`;
+          freshnessChip.textContent = buildFreshnessText();
+        }
         statusText.textContent =
           rows.length > 0
-            ? "Showing the latest successful snapshot."
+            ? lastLiveMeta
+              ? "Showing live availability for the selected city."
+              : "Showing the latest successful snapshot."
             : "No seats are currently available for this selection in the latest successful scan.";
 
         renderRows(rows);
@@ -661,6 +677,42 @@
           : "Open the Telegram bot for quick help and reminder commands. If you choose a city here, the site will copy that city name before opening Telegram so it is easier to send.";
       }
 
+      async function checkLive() {
+        const selectedState = stateSelect.value;
+        const selectedCity = citySelect.value;
+        if (!selectedState || !selectedCity) {
+          statusText.textContent = "Choose a state and city before running a live check.";
+          return;
+        }
+
+        statusText.textContent = "Checking live seat data for this city...";
+        try {
+          const url = new URL(LIVE_API_URL);
+          url.searchParams.set("state", selectedState);
+          url.searchParams.set("city", selectedCity);
+          const response = await fetch(url.toString(), { cache: "no-store" });
+          const payload = await response.json();
+          if (!response.ok || payload.ok === false) {
+            throw new Error(payload.error || "Live check failed.");
+          }
+
+          activeRows = Array.isArray(payload.rows) ? payload.rows : [];
+          lastLiveMeta = {
+            generatedAtDisplay: payload.generatedAtDisplay,
+          };
+
+          liveAlternatives = Array.isArray(payload.alternatives) ? payload.alternatives : [];
+
+          renderCurrentView();
+        } catch (error) {
+          lastLiveMeta = null;
+          liveAlternatives = [];
+          statusText.textContent = `Live check failed. Showing saved data instead.`;
+          activeRows = [...(latestPayload.rows || [])];
+          renderCurrentView();
+        }
+      }
+
       function renderRows(rows) {
         const selectedState = stateSelect.value;
         const selectedCity = citySelect.value;
@@ -673,7 +725,11 @@
 
         if (!rows.length) {
           content.innerHTML =
-            '<div class="empty">No seats are available for this city right now in the latest successful scan.</div>';
+            `<div class="empty">${
+              lastLiveMeta
+                ? "No seats are available for this city right now in the live check."
+                : "No seats are available for this city right now in the latest saved scan."
+            }</div>`;
           return;
         }
 
@@ -734,6 +790,25 @@
         recommendSection.style.display = "none";
         recommendList.innerHTML = "";
         recommendIntro.textContent = "";
+
+        if (lastLiveMeta && liveAlternatives.length) {
+          recommendSection.style.display = "block";
+          recommendIntro.textContent =
+            rows.length > 0
+              ? `These are the 5 best alternative tracked cities for ${citySelect.value}.`
+              : `Seats are not available in ${citySelect.value} right now. These are the 5 best alternative tracked cities.`;
+          recommendList.innerHTML = liveAlternatives
+            .map(
+              (item, index) => `
+                <div class="recommend-card">
+                  <strong>#${index + 1} ${escapeHtml(item.city)}, ${escapeHtml(item.state)}</strong>
+                  <div class="capacity">${escapeHtml(String(item.available_count))} open entry(s)</div>
+                </div>
+              `
+            )
+            .join("");
+          return;
+        }
 
         if (!stateSelect.value || !citySelect.value) {
           return;
@@ -831,12 +906,27 @@
         }
       });
 
-      applyBtn.addEventListener("click", renderCurrentView);
+      applyBtn.addEventListener("click", () => {
+        lastLiveMeta = null;
+        liveAlternatives = [];
+        activeRows = [...(latestPayload.rows || [])];
+        renderCurrentView();
+      });
+      const liveButton = document.createElement("button");
+      liveButton.type = "button";
+      liveButton.id = "liveBtn";
+      liveButton.className = "live-btn";
+      liveButton.textContent = "Check Live";
+      document.querySelector(".toolbar").prepend(liveButton);
+      liveButton.addEventListener("click", checkLive);
       resetBtn.addEventListener("click", () => {
         stateSelect.value = "";
         citySelect.value = "";
         populateCities();
         updateTelegramCta();
+        lastLiveMeta = null;
+        liveAlternatives = [];
+        activeRows = [...(latestPayload.rows || [])];
         renderCurrentView();
       });
 
