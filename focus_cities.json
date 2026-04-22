@@ -1,0 +1,12 @@
+[
+  { "state": "Maharashtra", "city": "Mumbai" },
+  { "state": "Maharashtra", "city": "Pune" },
+  { "state": "Delhi", "city": "Delhi New Delhi" },
+  { "state": "Delhi Ncr", "city": "Noida" },
+  { "state": "Delhi Ncr", "city": "Gurugram" },
+  { "state": "Karnataka", "city": "Bangalore" },
+  { "state": "Telangana", "city": "Hyderabad" },
+  { "state": "Tamil Nadu", "city": "Chennai" },
+  { "state": "West Bengal", "city": "Kolkata" },
+  { "state": "Gujarat", "city": "Ahmedabad" }
+]

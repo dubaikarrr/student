@@ -3,7 +3,8 @@ name: Update SPOM Seats
 on:
   workflow_dispatch:
   schedule:
-    - cron: "7 * * * *"
+    - cron: "7,37 * * * *"
+    - cron: "17 */6 * * *"
 
 permissions:
   contents: write
@@ -40,7 +41,13 @@ jobs:
             echo '{"rows":[]}' > public/data/previous-latest.json
           fi
 
-      - name: Run scanner
+      - name: Run fast scanner for focus cities
+        if: ${{ github.event_name != 'workflow_dispatch' && github.event.schedule != '17 */6 * * *' }}
+        continue-on-error: true
+        run: python spom_seat_checker.py --stdout --focus-cities-file focus_cities.json
+
+      - name: Run full scanner
+        if: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '17 */6 * * *' }}
         continue-on-error: true
         run: python spom_seat_checker.py --stdout
 

@@ -53,6 +53,22 @@ class ScanCatalog:
     cities_by_state: dict[str, list[str]]
 
 
+def load_focus_cities(path: Path) -> set[tuple[str, str]]:
+    data = load_existing_json(path, [])
+    if not isinstance(data, list):
+        return set()
+
+    focus: set[tuple[str, str]] = set()
+    for item in data:
+        if not isinstance(item, dict):
+            continue
+        state = str(item.get("state", "")).strip()
+        city = str(item.get("city", "")).strip()
+        if state and city:
+            focus.add((state, city))
+    return focus
+
+
 def load_existing_json(path: Path, fallback: object) -> object:
     if not path.exists():
         return fallback
@@ -217,7 +233,9 @@ class SpomClient:
 
 
 def build_rows(
-    client: SpomClient, state_filter: str | None = None
+    client: SpomClient,
+    state_filter: str | None = None,
+    focus_cities: set[tuple[str, str]] | None = None,
 ) -> tuple[list[AvailabilityRow], ScanCatalog]:
     rows: list[AvailabilityRow] = []
     catalog_states: list[str] = []
@@ -226,10 +244,18 @@ def build_rows(
     if state_filter:
         state_filter_norm = state_filter.casefold()
         states = [state for state in states if state.label.casefold() == state_filter_norm]
+    elif focus_cities:
+        focus_states = {state for state, _ in focus_cities}
+        states = [state for state in states if state.label in focus_states]
 
     for state in states:
-        catalog_states.append(state.label)
         cities = client.fetch_cities(state.key)
+        if focus_cities:
+            cities = [city for city in cities if (state.label, city.label) in focus_cities]
+        if not cities:
+            continue
+
+        catalog_states.append(state.label)
         catalog_cities[state.label] = [city.label for city in cities]
         for city in cities:
             centres = client.fetch_centres(city.key)
@@ -308,9 +334,11 @@ def write_public_data(
     output_dir: Path,
     generated_at: str,
     generated_at_iso: str,
+    focus_cities: set[tuple[str, str]] | None = None,
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     previous_latest = load_existing_json(output_dir / "latest.json", {"rows": []})
+    previous_summary = load_existing_json(output_dir / "summary.json", {"states": [], "cities": []})
     city_coordinates = load_city_coordinates()
     previous_rows = previous_latest.get("rows", []) if isinstance(previous_latest, dict) else []
     previous_row_keys = {
@@ -325,19 +353,59 @@ def write_public_data(
         if isinstance(item, dict)
     }
 
+    current_rows_payload = [row_to_payload(row) for row in rows]
+    if focus_cities:
+        carried_rows = []
+        for item in previous_rows:
+            if not isinstance(item, dict):
+                continue
+            state = str(item.get("state", ""))
+            city = str(item.get("city", ""))
+            if (state, city) not in focus_cities:
+                carried_rows.append(item)
+        latest_rows_payload = carried_rows + current_rows_payload
+    else:
+        latest_rows_payload = current_rows_payload
+
     latest_payload = {
         "generatedAtIso": generated_at_iso,
         "generatedAt": generated_at,
         "generatedAtDisplay": generated_at,
-        "total": len(rows),
-        "rows": [row_to_payload(row) for row in rows],
+        "total": len(latest_rows_payload),
+        "rows": sorted(
+            latest_rows_payload,
+            key=lambda item: (
+                str(item.get("state", "")),
+                str(item.get("city", "")),
+                str(item.get("centre", "")),
+                str(item.get("date", "")),
+            ),
+        ),
     }
 
     state_counts: dict[str, int] = defaultdict(int)
     city_counts: dict[tuple[str, str], int] = defaultdict(int)
-    for row in rows:
-        state_counts[row.state] += 1
-        city_counts[(row.state, row.city)] += 1
+    for item in latest_payload["rows"]:
+        state = str(item.get("state", ""))
+        city = str(item.get("city", ""))
+        state_counts[state] += 1
+        city_counts[(state, city)] += 1
+
+    previous_states = []
+    previous_city_pairs: set[tuple[str, str]] = set()
+    if isinstance(previous_summary, dict):
+        for item in previous_summary.get("states", []):
+            if isinstance(item, dict) and item.get("state"):
+                previous_states.append(str(item["state"]))
+        for item in previous_summary.get("cities", []):
+            if isinstance(item, dict) and item.get("state") and item.get("city"):
+                previous_city_pairs.add((str(item["state"]), str(item["city"])))
+
+    merged_states = sorted(set(previous_states) | set(catalog.states))
+    merged_city_pairs = sorted(
+        previous_city_pairs
+        | {(state, city) for state, cities in catalog.cities_by_state.items() for city in cities}
+    )
 
     summary_payload = {
         "generatedAtIso": generated_at_iso,
@@ -345,7 +413,7 @@ def write_public_data(
         "generatedAtDisplay": generated_at,
         "states": [
             {"state": state, "available_count": state_counts.get(state, 0)}
-            for state in sorted(catalog.states)
+            for state in merged_states
         ],
         "cities": [
             {
@@ -355,20 +423,19 @@ def write_public_data(
                 "lat": city_coordinates.get(f"{state}||{city}", {}).get("lat"),
                 "lon": city_coordinates.get(f"{state}||{city}", {}).get("lon"),
             }
-            for state in sorted(catalog.cities_by_state)
-            for city in sorted(catalog.cities_by_state[state])
+            for state, city in merged_city_pairs
         ],
     }
 
     new_rows = [
-        row_to_payload(row)
-        for row in rows
+        row
+        for row in current_rows_payload
         if (
-            row.state,
-            row.city,
-            row.centre,
-            row.date,
-            row.capacity,
+            str(row.get("state", "")),
+            str(row.get("city", "")),
+            str(row.get("centre", "")),
+            str(row.get("date", "")),
+            int(row.get("capacity", 0)),
         )
         not in previous_row_keys
     ]
@@ -435,6 +502,10 @@ def parse_args() -> argparse.Namespace:
         default="public/data",
         help="Directory for static JSON files consumed by the frontend. Default: public/data",
     )
+    parser.add_argument(
+        "--focus-cities-file",
+        help="Optional JSON file with state/city pairs for a faster partial refresh.",
+    )
     return parser.parse_args()
 
 
@@ -462,8 +533,15 @@ def main() -> int:
     generated_at_iso = now.isoformat()
 
     client = SpomClient()
+    focus_cities: set[tuple[str, str]] | None = None
+    if args.focus_cities_file:
+        focus_cities = load_focus_cities(Path(args.focus_cities_file).resolve())
     try:
-        rows, catalog = build_rows(client=client, state_filter=args.state)
+        rows, catalog = build_rows(
+            client=client,
+            state_filter=args.state,
+            focus_cities=focus_cities,
+        )
     except Exception as exc:
         print(f"Scan failed: {exc}", file=sys.stderr)
         return 1
@@ -476,7 +554,14 @@ def main() -> int:
     write_csv(rows, csv_path)
     write_json(rows, json_path)
     write_markdown(rows, md_path, generated_at)
-    write_public_data(rows, catalog, public_data_dir, generated_at, generated_at_iso)
+    write_public_data(
+        rows,
+        catalog,
+        public_data_dir,
+        generated_at,
+        generated_at_iso,
+        focus_cities=focus_cities,
+    )
 
     latest_path = output_dir / "spom_latest_run.txt"
     latest_path.write_text(generated_at + "\n", encoding="utf-8")
