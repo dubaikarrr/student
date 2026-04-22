@@ -38,6 +38,7 @@ What it does not change:
 - `public/index.html`: student-facing mobile-friendly dashboard.
 - `public/data/latest.json`: latest seat snapshot for the frontend.
 - `public/data/summary.json`: summary data for filters.
+- `cloudflare/telegram-bot.js`: Cloudflare Worker for the Telegram bot webhook.
 - `.github/workflows/hourly-update.yml`: hourly automation and Pages deployment.
 - `send_alerts.py`: optional email alert sender for new availability.
 - `subscribers.example.json`: sample subscriber format.
@@ -122,6 +123,40 @@ Notes:
 - `states: []` means all states.
 - `cities: []` means all cities within the chosen states.
 - Right now alerts are sent only for newly appeared rows.
+
+## Telegram bot on Cloudflare
+
+The website now includes a `Get reminded on Telegram` action that opens the bot:
+
+```text
+https://t.me/SPOM_Seat_Checker_bot
+```
+
+The bot code is versioned in:
+
+```text
+cloudflare/telegram-bot.js
+```
+
+Basic setup:
+
+1. Create a Cloudflare Worker.
+2. Add secret `TELEGRAM_BOT_TOKEN`.
+3. Add variable `SPOM_DATA_BASE_URL=https://dubaikarrr.github.io/student/data`.
+4. Optionally add a KV binding named `SUBSCRIPTIONS` for saved reminders.
+5. Deploy the Worker.
+6. Set the Telegram webhook to the Worker URL.
+
+Supported bot commands:
+
+- `/start`
+- `/help`
+- `/city CityName`
+- `/remind CityName`
+- `/myreminders`
+- `/stop CityName`
+
+Students can also just send a city name directly, such as `Mumbai`.
 
 ## Mobile support
 

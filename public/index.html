@@ -133,8 +133,33 @@
         margin-top: 14px;
       }
 
-      .toolbar button {
+      .toolbar button,
+      .toolbar a {
         flex: 1 1 180px;
+      }
+
+      .telegram-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border-radius: 14px;
+        padding: 12px 14px;
+        font: inherit;
+        text-decoration: none;
+        background: #245c4f;
+        color: white;
+        border: none;
+      }
+
+      .telegram-link:hover {
+        background: #1f4f44;
+      }
+
+      .telegram-note {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 0.94rem;
       }
 
       .status {
@@ -290,7 +315,19 @@
         <div class="toolbar">
           <button id="applyBtn" type="button">Apply Filters</button>
           <button id="resetBtn" type="button" class="secondary">Reset</button>
+          <a
+            id="telegramBtn"
+            class="telegram-link"
+            href="https://t.me/SPOM_Seat_Checker_bot?start=help"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open Telegram Bot</a
+          >
         </div>
+        <p class="telegram-note" id="telegramNote">
+          Open the Telegram bot for quick help and reminder commands. If you choose a city here,
+          the site will copy that city name before opening Telegram so it is easier to send.
+        </p>
       </section>
 
       <section class="results">
@@ -311,6 +348,8 @@
       const citySelect = document.getElementById("citySelect");
       const applyBtn = document.getElementById("applyBtn");
       const resetBtn = document.getElementById("resetBtn");
+      const telegramBtn = document.getElementById("telegramBtn");
+      const telegramNote = document.getElementById("telegramNote");
       const generatedAt = document.getElementById("generatedAt");
       const totalCount = document.getElementById("totalCount");
       const statusText = document.getElementById("statusText");
@@ -333,6 +372,7 @@
 
         populateStates();
         populateCities();
+        updateTelegramCta();
         renderCurrentView();
       }
 
@@ -365,6 +405,8 @@
               : `${row.city} (No seats)`;
           citySelect.appendChild(option);
         }
+
+        updateTelegramCta();
       }
 
       function renderCurrentView() {
@@ -383,6 +425,24 @@
 
         renderRows(rows);
         renderRecommendations(rows);
+        updateTelegramCta();
+      }
+
+      function updateTelegramCta(feedbackText = "") {
+        const city = citySelect.value;
+        telegramBtn.href = "https://t.me/SPOM_Seat_Checker_bot?start=help";
+        telegramBtn.textContent = city
+          ? `Get reminded on Telegram for ${city}`
+          : "Open Telegram Bot";
+
+        if (feedbackText) {
+          telegramNote.textContent = feedbackText;
+          return;
+        }
+
+        telegramNote.textContent = city
+          ? `The bot will open with usage instructions. ${city} will be copied first so you can paste it in Telegram to check batches or set reminders.`
+          : "Open the Telegram bot for quick help and reminder commands. If you choose a city here, the site will copy that city name before opening Telegram so it is easier to send.";
       }
 
       function renderRows(rows) {
@@ -521,6 +581,30 @@
       stateSelect.addEventListener("change", () => {
         populateCities();
         citySelect.value = "";
+        updateTelegramCta();
+      });
+
+      citySelect.addEventListener("change", () => {
+        updateTelegramCta();
+      });
+
+      telegramBtn.addEventListener("click", async () => {
+        const city = citySelect.value.trim();
+        if (!city || !navigator.clipboard || !window.isSecureContext) {
+          updateTelegramCta();
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(city);
+          updateTelegramCta(
+            `${city} has been copied. Open Telegram and paste it into the bot to check batches or use /remind ${city}.`
+          );
+        } catch (error) {
+          updateTelegramCta(
+            `Telegram is opening now. If the city is not copied automatically, type ${city} in the bot chat.`
+          );
+        }
       });
 
       applyBtn.addEventListener("click", renderCurrentView);
@@ -528,6 +612,7 @@
         stateSelect.value = "";
         citySelect.value = "";
         populateCities();
+        updateTelegramCta();
         renderCurrentView();
       });
 
